@@ -1,12 +1,12 @@
 import { compare } from "bcrypt"
-import { loginUser } from "../model/usersDB.js"
+import { loginUserDb } from "../model/usersDB.js"
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 dotenv.config()
 
 const checkUser = async(req,res,next)=>{
     const {email,password} = req.body
-    let hashedPassword = (await loginUser(email)).password
+    let hashedPassword = (await loginUserDb(email)).password
     
     console.log(hashedPassword);
 

@@ -10,33 +10,33 @@ const pool =createPool({
     password: process.env.PASSWORD
 })
 
-const getUsers = async()=>{
+const getUsersDb = async()=>{
     const [data] = await pool.query('SELECT * FROM users')
     return data
 }
 
-const getUser = async(id) =>{
+const getUserDb = async(id) =>{
     const [[data]] = await pool.query('SELECT * FROM users WHERE id = ?', [id])
     return data
 }
 
-const loginUser = async(email) =>{
+const loginUserDb = async(email) =>{
     const [[data]] = await pool.query('SELECT * FROM users WHERE email = ?', [email])
     return data
 }
 
-const insertUser = async(name, surname, gender, email, password, imgUrl) =>{
+const insertUserDb = async(name, surname, gender, email, password, imgUrl, role) =>{
     await pool.query(`
-        INSERT INTO users (name, surname, gender, email, password, imgUrl)
-        VALUES (?,?,?,?,?,?)
-        `, [name, surname, gender, email, password, imgUrl])
+        INSERT INTO users (name, surname, gender, email, password, imgUrl, role)
+        VALUES (?,?,?,?,?,?,?)
+        `, [name, surname, gender, email, password, imgUrl, role])
 }
 
-const deleteUser = async(id) =>{
+const deleteUserDb = async(id) =>{
     await pool.query(`DELETE FROM users WHERE id = ?`, [id])
 }
 
-const updateUser = async(name, surname, gender, email, password, imgUrl, id) =>{
+const updateUserDb = async(name, surname, gender, email, password, imgUrl, role, id) =>{
     await pool.query(`
         UPDATE users
         SET name = ? ,
@@ -44,9 +44,10 @@ const updateUser = async(name, surname, gender, email, password, imgUrl, id) =>{
         gender = ? ,
         email = ? ,
         password = ? ,
-        imgUrl = ? 
+        imgUrl = ? ,
+        role = ?
         WHERE id = ?`,
-    [name, surname, gender, email, password, imgUrl, id])
+    [name, surname, gender, email, password, imgUrl, role, id])
 }
 
-export {getUsers, getUser, insertUser, deleteUser, updateUser, loginUser}
+export {getUsersDb, getUserDb, insertUserDb, deleteUserDb, updateUserDb, loginUserDb}
