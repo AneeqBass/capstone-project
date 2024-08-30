@@ -1,5 +1,6 @@
 import express from 'express'
 import supplementsRouter from './routers/supplements.js'
+import usersRouter from './routers/users.js'
 import cors from 'cors'
 let port = process.env.PORT || 5001
 const app = express()
@@ -19,8 +20,8 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use('/supplements', supplementsRouter)
+app.use('/users', usersRouter)
 
 
 app.listen(port, () => {
