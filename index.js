@@ -1,4 +1,5 @@
 import express from 'express'
+import equipmentRouter from './routers/equipment.js'
 import supplementsRouter from './routers/supplements.js'
 import usersRouter from './routers/users.js'
 import cors from 'cors'
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/equipment', equipmentRouter)
 app.use('/supplements', supplementsRouter)
 app.use('/users', usersRouter)
 

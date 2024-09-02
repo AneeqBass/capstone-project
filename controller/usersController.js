@@ -47,7 +47,6 @@ const updateUser = async (req, res) => {
         imgUrl?imgUrl=imgUrl:imgUrl = user.imgUrl
         role?role=role:role = user.role
 
-       
         if (password) {
             hash(password, 10, async (err, hashedP) => {
                 if (err) {
