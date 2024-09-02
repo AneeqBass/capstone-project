@@ -8,6 +8,7 @@
 <body>
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
         <table border="1">
+            <!-- USER INFO -->
             <th colspan="3">USER INFORMATION</th>
             <thead>
                 <th>HTTP Method</th>
@@ -15,7 +16,6 @@
                 <th>Description</th>
             </thead>
             <tbody>
-                <!-- USER INFO -->
                 <tr>
                     <td>GET</td>
                     <td>/users</td>
@@ -48,32 +48,59 @@
                     <td>/users/delete/:id</td>
                     <td>Removes a user by id</td>
                 </tr>
-                <th colspan="3">PRODUCT INFORMATION</th>
-                <!-- PRODUCT INFO -->
+                <!-- SUPPLEMENTS INFO -->
+                <th colspan="3">SUPPLEMENTS INFORMATION</th>
                 <tr>
                     <td>GET</td>
-                    <td>/products</td>
-                    <td>Gets all products</td>
+                    <td>/supplements</td>
+                    <td>Gets all supplements</td>
                 </tr>
                 <tr>
                     <td>GET</td>
-                    <td>/products/:id</td>
-                    <td>Gets a single product by id</td>
+                    <td>/supplements/:id</td>
+                    <td>Gets a single supplement by id</td>
                 </tr>
                 <tr>
                     <td>POST</td>
-                    <td>/products/addProduct</td>
-                    <td>Adds a new product</td>
+                    <td>/supplements/addsupplement</td>
+                    <td>Adds a new supplement</td>
                 </tr>
                 <tr>
                     <td>PATCH</td>
-                    <td>/products/update/:id</td>
-                    <td>Edit a product's information by id</td>
+                    <td>/supplements/update/:id</td>
+                    <td>Edit a supplement's information by id</td>
                 </tr>
                 <tr>
                     <td>DELETE</td>
-                    <td>/products/delete/:id</td>
-                    <td>Removes a product by id</td>
+                    <td>/supplements/delete/:id</td>
+                    <td>Removes a supplement by id</td>
+                </tr>
+                <!-- EQUIPMENT INFO -->
+                <th colspan="3">EQUIPMENT INFORMATION</th>
+                <tr>
+                    <td>GET</td>
+                    <td>/equipment</td>
+                    <td>Gets all equipment</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/equipment/:id</td>
+                    <td>Gets a single equipment by id</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/equipment/addEquipment</td>
+                    <td>Adds a new equipment</td>
+                </tr>
+                <tr>
+                    <td>PATCH</td>
+                    <td>/equipment/update/:id</td>
+                    <td>Edit an equipment's information by id</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td>/equipment/delete/:id</td>
+                    <td>Removes an equipment by id</td>
                 </tr>
             </tbody>
         </table>
