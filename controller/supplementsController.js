@@ -32,16 +32,17 @@ const deleteSupplement = async (req, res) => {
 
 const updateSupplement = async (req, res) => {
     try {
-        let { name, description, category, price, quantity, imgUrl, createdUserId } = req.body;
+        let { name, description, category, price, quantity, imgUrl } = req.body;
         let supplement = await getSupplementDb(req.params.id);
+
         name?name=name:name = supplement.name
         description?description=description:description = supplement.description
         category?category=category:category = supplement.category
         price?price=price:price = supplement.price
         quantity?quantity=quantity:quantity = supplement.quantity
         imgUrl?imgUrl=imgUrl:imgUrl = supplement.imgUrl
-        createdUserId?createdUserId=createdUserId:createdUserId + supplement.createdUserId
-        await updateSupplementDb(name, description, category, price, quantity, imgUrl, createdUserId, req.params.id);
+
+        await updateSupplementDb(name, description, category, price, quantity, imgUrl, req.params.id);
         res.status(200).send('Supplement was updated successfully');
 
     } catch (error) {
