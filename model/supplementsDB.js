@@ -31,14 +31,13 @@ const insertSupplementDb = async(name, description, category, price, quantity, i
         [name, description, category, price, quantity, imgUrl, createdUserId])
 }
 
-
 const deleteSupplementDb = async(id) =>{
     await pool.query(
         `DELETE FROM supplements WHERE id = ?`, [id]
     )
 }
 
-const updateSupplementDb = async(name, description, category, price, quantity, imgUrl, createdUserId, id) =>{
+const updateSupplementDb = async(name, description, category, price, quantity, imgUrl, id) =>{
     await pool.query(`
         UPDATE supplements
         SET name = ?,
@@ -46,11 +45,9 @@ const updateSupplementDb = async(name, description, category, price, quantity, i
         category = ? ,
         price = ? ,
         quantity = ? ,
-        imgUrl = ? ,
-        createdUserId = ? 
+        imgUrl = ? 
         WHERE id = ?`, 
-        [name, description, category, price, quantity, imgUrl, createdUserId, id])
-
+        [name, description, category, price, quantity, imgUrl, id])
 }
 
 export {getSupplementsDb, getSupplementDb, insertSupplementDb, deleteSupplementDb, updateSupplementDb}
