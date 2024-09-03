@@ -25,11 +25,11 @@ const loginUserDb = async(email) =>{
     return data
 }
 
-const insertUserDb = async(name, surname, gender, email, password, imgUrl, role) =>{
+const insertUserDb = async(name, surname, gender, email, password, imgUrl) =>{
     await pool.query(`
-        INSERT INTO users (name, surname, gender, email, password, imgUrl, role)
+        INSERT INTO users (name, surname, gender, email, password, imgUrl)
         VALUES (?,?,?,?,?,?,?)
-        `, [name, surname, gender, email, password, imgUrl, role])
+        `, [name, surname, gender, email, password, imgUrl])
 }
 
 const deleteUserDb = async(id) =>{
