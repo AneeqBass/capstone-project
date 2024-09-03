@@ -11,14 +11,14 @@ const fetchUser = async(req,res)=>{
 
 const insertUser = async (req, res) => {
     try {
-        let { name, surname, gender, email, password, imgUrl, role } = req.body;
+        let { name, surname, gender, email, password, imgUrl } = req.body;
 
         hash(password, 10, async (err, hashedP) => {
             if (err) {
                 return res.status(404).send('Error with password');
             }
             try {
-                await insertUserDb(name, surname, gender, email, hashedP, imgUrl, role);
+                await insertUserDb(name, surname, gender, email, hashedP, imgUrl);
                 res.status(200).send('User was registered successfully');
             } catch (dbError) {
                 res.status(404).send('Error while registering user');
