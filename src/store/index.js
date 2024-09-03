@@ -40,8 +40,8 @@ export default createStore({
     async fetchUsers({commit}) {
       try {
         let { data, msg } = await axios.get(`${apiURL}users`);
-        if (data.result) {
-          commit("setUsers", data.result);
+        if (data) {
+          commit("setUsers", data.result || data);
           console.log(data);
           
         } else {
@@ -144,15 +144,15 @@ export default createStore({
     },
     async fetchEquipments({commit}) {
       try {
-        let response =  await axios.get(`${apiURL}equipment`) 
-        console.log(response.data)
+        let { data, msg } =  await axios.get(`${apiURL}equipment`) 
+        console.log(data)
             
-            if (response.data) {
-              commit("setEquipments", response.data.results || response.data);
-              console.log(response.data);
+            if (data) {
+              commit("setEquipments", data.results || data);
+              console.log(data);
               
             } else {
-              toast.error(`${response.msg}`, {
+              toast.error(`${msg}`, {
                 autoClose: 3000
               });
             }
@@ -167,8 +167,8 @@ export default createStore({
 
       try {
         let { data, msg } = await axios.get(`${apiURL}equipment/${id}`)
-            if (data.result) {
-              commit("setEquipment", data.result);
+            if (data) {
+              commit("setEquipment", data.result || data);
             console.log(data);
             }
             else {
@@ -245,12 +245,12 @@ export default createStore({
     },
     async fetchSupplements({commit}) {
       try {
-        let response =  await axios.get(`${apiURL}supplements`) 
+        let { data, msg } =  await axios.get(`${apiURL}supplements`) 
             
-            if (response.data) {
-              commit("setSupplements", response.data.results || response.data);
+            if (data) {
+              commit("setSupplements", data.results || data);
             } else {
-              toast.error(`${response.msg}`, {
+              toast.error(`${msg}`, {
                 autoClose: 3000,
               });
             }
