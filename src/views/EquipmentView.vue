@@ -1,7 +1,7 @@
 <template>
     <div class="container pb-3">
-        <div class="products">
-            <h1 class="mb-2 text-start">/Products</h1>
+        <div class="equipments">
+            <h1 class="mb-2 text-start">/Equipments</h1>
 
             <!-- Filter by Category -->
             <div class="mb-3">
@@ -21,19 +21,19 @@
                 </select>
             </div>
 
-            <div class="row justify-content-center" v-if="filteredProducts.length">
-                <Card data-aos="fade-up" v-for="product in sortedProducts" :key="product.prodID">
+            <div class="row justify-content-center" v-if="filteredEquipments.length">
+                <Card data-aos="fade-up" v-for="equipment in sortedEquipments" :key="equipment.id">
                     <template #cardHeader>
-                        <img :src="product.prodURL" loading="lazy"
-                            class="small-img img-fluid rounded mx-auto d-block card-img-top" :alt="product.prodName">
+                        <img :src="equipment.imgUrl" loading="lazy"
+                            class="small-img img-fluid rounded mx-auto d-block card-img-top" :alt="equipment.name">
                     </template>
                     <template #cardBody>
-                        <h5 class="card-title">{{ product.prodName }}</h5>
-                        <h5 class="card-title">{{ product.category }}</h5>
-                        <p class="lead"><span class="text-success">Quantity</span>: {{ product.quantity }}</p>
-                        <p class="lead"><span class="text-success">Amount</span>: R{{ product.amount }}</p>
-                        <router-link :to="{ name: 'productDetail', params: { id: product.prodID } }"><i
-                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link>
+                        <h5 class="card-title">{{ equipment.name }}</h5>
+                        <h5 class="card-title">{{ equipment.category }}</h5>
+                        <p class="lead"><span class="text-success">Quantity</span>: {{ equipment.quantity }}</p>
+                        <p class="lead"><span class="text-success">Price</span>: R{{ equipment.price }}</p>
+                        <!-- <router-link :to="{ name: 'equipmentDetail', params: { id: equipment.id } }"><i
+                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link> -->
                     </template>
                 </Card>
             </div>
@@ -50,7 +50,7 @@ import Card from '@/components/CardComp.vue'
 
 export default {
     state: {
-        products: []
+        equipments: []
     },
 
     data() {
@@ -61,24 +61,24 @@ export default {
     },
     computed: {
         categories() {
-            if (!this.$store.state.products || !this.$store.state.products.length) {
+            if (!this.$store.state.equipments || !this.$store.state.equipments.length) {
                 return []; 
             }
-            const categories = this.$store.state.products.map(product => product.category);
+            const categories = this.$store.state.equipments.map(equipment => equipment.category);
             return [...new Set(categories)];
         },
-        filteredProducts() {
+        filteredEquipments() {
             if (!this.selectedCategory) {
-                return this.products();
+                return this.equipments();
             }
-            return this.products().filter(product => product.category === this.selectedCategory);
+            return this.equipments().filter(equipment => equipment.category === this.selectedCategory);
         },
-        sortedProducts() {
-            return [...this.filteredProducts].sort((a, b) => {
+        sortedEquipments() {
+            return [...this.filteredEquipments].sort((a, b) => {
                 if (this.sortOption === 'name') {
-                    return a.prodName.localeCompare(b.prodName);
+                    return a.name.localeCompare(b.name);
                 } else if (this.sortOption === 'price') {
-                    return a.amount - b.amount;
+                    return a.price - b.price;
                 }
                 return 0;
             });
@@ -88,13 +88,13 @@ export default {
 
     methods: {
         mounted() {
-            this.getProducts();
+            this.getEquipments();
         },
-        getProducts() {
-            this.$store.dispatch('fetchProducts');
+        getEquipments() {
+            this.$store.dispatch('fetchEquipments');
         },
-        products() {
-            return this.$store.state.products || [];
+        equipments() {
+            return this.$store.state.equipments || [];
         },
     },
     components: {
@@ -102,7 +102,7 @@ export default {
         Card,
     },
     mounted() {
-        this.getProducts();
+        this.getEquipments();
     },
 };
 </script>
@@ -115,7 +115,7 @@ export default {
     letter-spacing: 0.05em;
 }
 
-.products {
+.equipments {
     margin-top: 120px;
     width: 100%;
 }

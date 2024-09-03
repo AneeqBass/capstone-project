@@ -4,16 +4,16 @@ import router from "@/router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-const apiURL = "https://fitquip-capstone.onrender.com";
+const apiURL = "https://fitquip-capstone.onrender.com/";
 
 export default createStore({
   state: {
     users: null,
     user: null,
-    Supplements: null,
-    Supplement: null,
     supplements: null,
     supplement: null,
+    equipments: null,
+    equipment: null,
   },
   getters: {},
   mutations: {
@@ -144,13 +144,16 @@ export default createStore({
     },
     async fetchEquipments({commit}) {
       try {
-        let { data, msg } =  await axios.get(`${apiURL}equipment`) 
+        let response =  await axios.get(`${apiURL}equipment`) 
+        console.log(response.data)
             
-            if (data.results) {
-              commit("setEquipments", data.results);
+            if (response.data) {
+              commit("setEquipments", response.data.results || response.data);
+              console.log(response.data);
+              
             } else {
-              toast.error(`${msg}`, {
-                autoClose: 3000,
+              toast.error(`${response.msg}`, {
+                autoClose: 3000
               });
             }
           } catch (error) {
