@@ -1,7 +1,7 @@
 <template>
     <div class="container pb-3">
-        <div class="equipments">
-            <h1 class="mb-2 text-start">/Equipments</h1>
+        <div class="supplements">
+            <h1 class="mb-2 text-start">/Supplements</h1>
 
             <!-- Filter by Category -->
             <div class="mb-3">
@@ -21,8 +21,8 @@
                 </select>
             </div>
 
-            <div class="row justify-content-center" v-if="filteredEquipments.length">
-                <Card data-aos="fade-up" v-for="equipment in sortedEquipments" :key="equipment.id">
+            <div class="row justify-content-center" v-if="filteredSupplements.length">
+                <Card data-aos="fade-up" v-for="equipment in sortedSupplements" :key="equipment.id">
                     <template #cardHeader>
                         <img :src="equipment.imgUrl" loading="lazy"
                             class="small-img img-fluid rounded mx-auto d-block card-img-top" :alt="equipment.name">
@@ -50,7 +50,7 @@ import Card from '@/components/CardComp.vue'
 
 export default {
     state: {
-        equipments: []
+        supplements: []
     },
 
     data() {
@@ -61,20 +61,20 @@ export default {
     },
     computed: {
         categories() {
-            if (!this.$store.state.equipments || !this.$store.state.equipments.length) {
+            if (!this.$store.state.supplements || !this.$store.state.supplements.length) {
                 return []; 
             }
-            const categories = this.$store.state.equipments.map(equipment => equipment.category);
+            const categories = this.$store.state.supplements.map(equipment => equipment.category);
             return [...new Set(categories)];
         },
-        filteredEquipments() {
+        filteredSupplements() {
             if (!this.selectedCategory) {
-                return this.equipments();
+                return this.supplements();
             }
-            return this.equipments().filter(equipment => equipment.category === this.selectedCategory);
+            return this.supplements().filter(equipment => equipment.category === this.selectedCategory);
         },
-        sortedEquipments() {
-            return [...this.filteredEquipments].sort((a, b) => {
+        sortedSupplements() {
+            return [...this.filteredSupplements].sort((a, b) => {
                 if (this.sortOption === 'name') {
                     return a.name.localeCompare(b.name);
                 } else if (this.sortOption === 'price') {
@@ -88,13 +88,13 @@ export default {
 
     methods: {
         mounted() {
-            this.getEquipments();
+            this.getSupplements();
         },
-        getEquipments() {
-            this.$store.dispatch('fetchEquipments');
+        getSupplements() {
+            this.$store.dispatch('fetchSupplements');
         },
-        equipments() {
-            return this.$store.state.equipments || [];
+        supplements() {
+            return this.$store.state.supplements || [];
         },
     },
     components: {
@@ -102,7 +102,7 @@ export default {
         Card,
     },
     mounted() {
-        this.getEquipments();
+        this.getSupplements();
     },
 };
 </script>
@@ -115,7 +115,7 @@ export default {
     letter-spacing: 0.05em;
 }
 
-.equipments {
+.supplements {
     margin-top: 120px;
     width: 100%;
 }
