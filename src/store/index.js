@@ -245,12 +245,12 @@ export default createStore({
     },
     async fetchSupplements({commit}) {
       try {
-        let { data, msg } =  await axios.get(`${apiURL}supplements`) 
+        let response =  await axios.get(`${apiURL}supplements`) 
             
-            if (data.results) {
-              commit("setSupplements", data.results);
+            if (response.data) {
+              commit("setSupplements", response.data.results || response.data);
             } else {
-              toast.error(`${msg}`, {
+              toast.error(`${response.msg}`, {
                 autoClose: 3000,
               });
             }
