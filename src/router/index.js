@@ -1,19 +1,55 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
   },
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => import(/* webpackChunkName: "contact" */ '../views/ContactView.vue')
+  },
+  {
+    path: '/products',
+    name: 'products',
+    component: () => import(/* webpackChunkName: "products" */ '../views/ProductsView.vue')
+  },
+  {
+    path: '/productDetail/:id',
+    name: 'productDetail',
+    component: () => import(/* webpackChunkName: "productDetail" */ '../views/ProductDetailView.vue')
+  },
+  {
+    path: '/productAdd/',
+    name: 'productAdd',
+    component: () => import(/* webpackChunkName: "productAdd" */ '../views/ProductAddView.vue')
+  },
+  {
+    path: '/productEdit/:id',
+    name: 'productEdit',
+    component: () => import(/* webpackChunkName: "productEdit" */ '../views/ProductEditView.vue')
+  },
+  {
+    path: '/userAdd/',
+    name: 'userAdd',
+    component: () => import(/* webpackChunkName: "userAdd" */ '../views/UserAddView.vue')
+  },
+  {
+    path: '/userEdit/:id',
+    name: 'userEdit',
+    component: () => import(/* webpackChunkName: "userEdit" */ '../views/UserEditView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import(/* webpackChunkName: "admin" */ '../views/AdminView.vue')
   }
 ]
 
