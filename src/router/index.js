@@ -17,10 +17,10 @@ const routes = [
     component: () => import(/* webpackChunkName: "contact" */ '../views/ContactView.vue')
   },
   {
-    path: '/products',
-    name: 'products',
-    component: () => import(/* webpackChunkName: "products" */ '../views/ProductsView.vue')
-  },
+    path: '/equipment',
+    name: 'equipment',
+    component: () => import(/* webpackChunkName: "equipment" */ '../views/EquipmentView.vue')
+  }, 
   {
     path: '/productDetail/:id',
     name: 'productDetail',
