@@ -22,6 +22,9 @@
               <router-link to="/equipment" class="nav-link">Equipment</router-link>
             </li>
             <li class="nav-item">
+              <router-link to="/supplements" class="nav-link">Supplements</router-link>
+            </li>
+            <li class="nav-item">
               <router-link to="/admin" class="nav-link">Admin</router-link>
             </li>
             <li class="nav-item">
