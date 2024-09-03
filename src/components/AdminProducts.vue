@@ -47,9 +47,9 @@
       </div>
   <hr>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import Spinner from '@/components/SpinnerComp.vue';
   
   export default {
