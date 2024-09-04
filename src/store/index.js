@@ -40,8 +40,8 @@ export default createStore({
     async fetchUsers({ commit }) {
       try {
         let { data, msg } = await axios.get(`${apiURL}users`);
-        if (data.result) {
-          commit("setUsers", data.result);
+        if (data) {
+          commit("setUsers", data.result || data);
           console.log(data);
         } else {
           toast.error(`${msg}`, {
@@ -262,8 +262,8 @@ export default createStore({
     async fetchSupplement({ commit }, id) {
       try {
         let { data, msg } = await axios.get(`${apiURL}supplements/${id}`);
-        if (data.result) {
-          commit("setSupplement", data.result);
+        if (data) {
+          commit("setSupplement", data.result || data);
           console.log(data);
         } else {
           toast.error(`${msg}`, {
