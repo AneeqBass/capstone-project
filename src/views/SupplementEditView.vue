@@ -11,8 +11,8 @@
             </div>
             <div class="mb-3">
                 <label for="editProductDescription" class="form-label">Product Description</label>
-                <input v-model="product.description" type="text" class="form-control text-center" id="editProductDescription"
-                    required />
+                <input v-model="product.description" type="text" class="form-control text-center"
+                    id="editProductDescription" required />
             </div>
             <div class="mb-3">
                 <label for="editProductCategory" class="form-label">Category</label>
@@ -35,7 +35,7 @@
                     id="editProductPrice" required />
             </div>
             <div class="pb-3">
-            <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </form>
         <div v-else>
@@ -84,10 +84,10 @@ export default {
 img {
     width: 25rem;
 }
+
 .prodImg {
-  border: none;
-  -webkit-filter: drop-shadow(2px 2px 0 #e21861)
-    drop-shadow(-2px -2px 0 #e21861);
-  filter: drop-shadow(2px 2px 0 #e21861) drop-shadow(-2px -2px 0 #e21861);
+    border: none;
+    -webkit-filter: drop-shadow(2px 2px 0 #e21861) drop-shadow(-2px -2px 0 #e21861);
+    filter: drop-shadow(2px 2px 0 #e21861) drop-shadow(-2px -2px 0 #e21861);
 }
 </style>

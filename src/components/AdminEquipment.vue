@@ -23,9 +23,9 @@
               <td class="d-none d-md-table-cell">{{ equipment.quantity }}</td>
               <td class="d-none d-md-table-cell">R{{ equipment.price }}</td>
               <td>
-                <!-- <router-link :to="{ name: 'equipmentEdit', params: { id: equipment.id } }">
+                <router-link :to="{ name: 'equipmentEdit', params: { id: equipment.id } }">
                   <button class="btn btn-sm"><i class="bi bi-pencil-square"></i></button>
-                </router-link> -->
+                </router-link>
               </td>
               <td>
                 <button class="btn btn-sm" @click="deleteEquipment(equipment.id)"><i
@@ -41,9 +41,9 @@
       </div>
       <div class="d-flex justify-content-center align-items-center">
         <p class="my-auto">Add Equipment</p>
-        <!-- <router-link :to="{ name: 'equipmentAdd' }">
+        <router-link :to="{ name: 'equipmentAdd' }">
           <i class="bi-plus-square-fill mx-2"></i>
-        </router-link> -->
+        </router-link>
       </div>
   <hr>
     </div>
