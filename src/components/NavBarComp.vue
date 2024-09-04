@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg bg-transparent position-fixed w-100 sticky-top">
       <div class="container-fluid m-auto">
         <router-link to="/" class="nav-link">
-          <img src="https://aneeqbass.github.io/node-eomp-images/techfitLogoBgTransparent.png" class="logo"
+          <img src="https://aneeqbass.github.io/fitquip_images/fitbitlogotransparentemblem.png" class="logo"
             loading="lazy" alt="" />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"

@@ -3,28 +3,42 @@
     <div class="container text-white">
       <div class="row g-3 mb-5">
         <div class="col-md-6 order-md-1 m-auto">
-          <h1 class="text-start">/TechFit</h1>
-          <h6 class="text-start">Wear the Future, Own Your Potential.</h6>
+          <h1 class="text-start">/FitQuip</h1>
+          <h6 class="text-start">Streamlining Your Fitness, One Rep at a Time</h6>
           <div class="row gx-5">
             <div class="col">
-              <router-link to="/about"><button type="button" class="btn btn-lg w-100 mb-2">
-                  About
+              <router-link to="/equipment"><button type="button" class="btn btn-lg w-100 mb-2">
+                  Equipment
                 </button></router-link>
             </div>
             <div class="col">
-              <router-link to="/products"><button type="button" class="btn btn-lg w-100">
-                  Products
+              <router-link to="/supplements"><button type="button" class="btn btn-lg w-100">
+                  Supplements
                 </button></router-link>
             </div>
           </div>
         </div>
         <div class="col-md-6 order-md-2">
-          <img src="https://aneeqbass.github.io/node-eomp-images/apple_watch_6.png"
-            class="img-thumbnail prodImg bg-transparent" alt="" />
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="https://aneeqbass.github.io/node-eomp-images/apple_watch_6.png"
+                  class="img-thumbnail prodImg bg-transparent" alt="" />
+              </div>
+              <div class="carousel-item">
+                <img src="https://aneeqbass.github.io/node-eomp-images/apple_watch_6.png"
+                  class="img-thumbnail prodImg bg-transparent" alt="" />
+              </div>
+              <div class="carousel-item">
+                <img src="https://aneeqbass.github.io/node-eomp-images/apple_watch_6.png"
+                  class="img-thumbnail prodImg bg-transparent" alt="" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <h1 class="text-start">/Equipment</h1>
-      <div v-if="equipment">
+      <div v-if="equipments">
         <div data-aos="fade-left" class="accordion accordion-flush" id="accordionExample">
           <div class="accordion-item bg-transparent with-blur-backdrop border-2 accMarg ">
             <div id="collapseOne" class="accordion-collapse collapse show " data-bs-parent="#accordionExample">
@@ -53,6 +67,36 @@
       <div v-else>
         <Spinner />
       </div>
+      <h1 class="text-start">/Supplement</h1>
+      <div v-if="supplements">
+        <div data-aos="fade-left" class="accordion accordion-flush" id="accordionExample">
+          <div class="accordion-item bg-transparent with-blur-backdrop border-2 accMarg ">
+            <div id="collapseOne" class="accordion-collapse collapse show " data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="card-group card-group-scroll m-auto">
+                  <div v-for="supplement in supplements()" id="cardBlockWidth"
+                    class="card bg-transparent with-blur-backdrop border border-0" :key="supplement.id">
+                    <div class="container-fluid">
+                      <img id="imgSize" :src="supplement.imgUrl" class="img-fluid" alt="image" />
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ supplement.name }}</h5>
+                      <h5 class="card-title">{{ supplement.quantity }}</h5>
+                      <p class="lead">
+                        <span class="text-success">Price</span>:
+                        R{{ supplement.price }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <Spinner />
+      </div>
     </div>
   </div>
 </template>
@@ -62,18 +106,25 @@ import Spinner from "@/components/SpinnerComp.vue";
 
 export default {
   methods: {
-    getEquipment() {
-      this.$store.dispatch("fetchEquipment");
+    getEquipments() {
+      this.$store.dispatch("fetchEquipments");
     },
     equipments() {
-      return this.$store.state.equipment;
+      return this.$store.state.equipments;
+    },
+    getSupplements() {
+      this.$store.dispatch("fetchSupplements");
+    },
+    supplements() {
+      return this.$store.state.supplements;
     },
   },
   components: {
     Spinner,
   },
   mounted() {
-    this.getEquipment();
+    this.getEquipments();
+    this.getSupplements();
   },
 };
 </script>
