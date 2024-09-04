@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-      <h5>Products</h5>
-      <input v-model="searchQuery" placeholder="Search Products..." class="form-control mb-3" />
-      <div class="table-responsive" v-if="filteredProducts.length">
-        <table class="table table-products">
+      <h5>Equipments</h5>
+      <input v-model="searchQuery" placeholder="Search Equipments..." class="form-control mb-3" />
+      <div class="table-responsive" v-if="filteredEquipments.length">
+        <table class="table table-equipments">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -16,19 +16,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in filteredProducts" :key="product.prodID">
-              <td>{{ product.prodID }}</td>
-              <td>{{ product.prodName }}</td>
-              <td class="d-none d-sm-table-cell">{{ product.category }}</td>
-              <td class="d-none d-md-table-cell">{{ product.quantity }}</td>
-              <td class="d-none d-md-table-cell">R{{ product.amount }}</td>
+            <tr v-for="equipment in filteredEquipments" :key="equipment.id">
+              <td>{{ equipment.id }}</td>
+              <td>{{ equipment.name }}</td>
+              <td class="d-none d-sm-table-cell">{{ equipment.category }}</td>
+              <td class="d-none d-md-table-cell">{{ equipment.quantity }}</td>
+              <td class="d-none d-md-table-cell">R{{ equipment.price }}</td>
               <td>
-                <router-link :to="{ name: 'productEdit', params: { id: product.prodID } }">
+                <!-- <router-link :to="{ name: 'equipmentEdit', params: { id: equipment.id } }">
                   <button class="btn btn-sm"><i class="bi bi-pencil-square"></i></button>
-                </router-link>
+                </router-link> -->
               </td>
               <td>
-                <button class="btn btn-sm" @click="deleteProduct(product.prodID)"><i
+                <button class="btn btn-sm" @click="deleteEquipment(equipment.id)"><i
                     class="bi bi-trash-fill"></i></button>
               </td>
             </tr>
@@ -37,13 +37,13 @@
       </div>
       <div v-else>
         <Spinner v-if="loading" />
-        <p v-else>No products found.</p>
+        <p v-else>No equipments found.</p>
       </div>
       <div class="d-flex justify-content-center align-items-center">
-        <p class="my-auto">Add Product</p>
-        <router-link :to="{ name: 'productAdd' }">
+        <p class="my-auto">Add Equipment</p>
+        <!-- <router-link :to="{ name: 'equipmentAdd' }">
           <i class="bi-plus-square-fill mx-2"></i>
-        </router-link>
+        </router-link> -->
       </div>
   <hr>
     </div>
@@ -61,35 +61,35 @@
       };
     },
     computed: {
-      products() {
-        return this.$store.state.products || [];  
+      equipments() {
+        return this.$store.state.equipments || [];  
       },
-      filteredProducts() {
-        return this.products.filter(product =>
-          product.prodName.toLowerCase().includes(this.searchQuery.toLowerCase())
+      filteredEquipments() {
+        return this.equipments.filter(equipment =>
+          equipment.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       },
     },
     methods: {
-      fetchProducts() {
+      fetchEquipments() {
         this.loading = true;
-        this.$store.dispatch('fetchProducts')
+        this.$store.dispatch('fetchEquipments')
           .then(() => {
             this.loading = false;
           })
           .catch(err => {
-            this.error = 'Failed to fetch products.';
+            this.error = 'Failed to fetch equipments.';
             console.error(err);
           });
       },
-      deleteProduct(productID) {
-        if (confirm('Are you sure you want to delete this product?')) {
-          this.$store.dispatch('deleteProduct', productID)
+      deleteEquipment(id) {
+        if (confirm('Are you sure you want to delete this equipment?')) {
+          this.$store.dispatch('deleteEquipment', id)
             .then(() => {
-              this.fetchProducts();
+              this.fetchEquipments();
             })
             .catch(err => {
-              console.error('Failed to delete product:', err);
+              console.error('Failed to delete equipment:', err);
             });
         }
       }
@@ -98,7 +98,7 @@
       Spinner,
     },
     mounted() {
-      this.fetchProducts();
+      this.fetchEquipments();
     }
   };
   </script>
@@ -108,16 +108,16 @@
     max-width: 100%;
   }
   
-  .table-products th,
-  .table-products td {
+  .table-equipments th,
+  .table-equipments td {
     white-space: nowrap;
     vertical-align: middle;
   }
   
   @media (max-width: 575px) {
   
-    .table-products th,
-    .table-products td {
+    .table-equipments th,
+    .table-equipments td {
       font-size: 0.8rem;
     }
   }

@@ -1,90 +1,85 @@
 <template>
-    <div class="container pb-4">
-      <form id="editUserForm" v-if="user" @submit.prevent="updateUser">
-        <div class="mb-3">
-          <img class="prodImg" :src=user.userProfile alt="">
-        </div>
-        <div class="mb-3">
-          <label for="editUserFirstName" class="form-label">First Name</label>
-          <input v-model="user.firstName" type="text" class="form-control text-center" id="editUserName" required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserLastName" class="form-label">Last Name</label>
-          <input v-model="user.lastName" type="text" class="form-control text-center" id="editUserLastName" required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserAge" class="form-label">Age</label>
-          <input v-model="user.userAge" type="number" class="form-control text-center" id="editUserAge" required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserGender" class="form-label">Gender</label>
-          <input v-model="user.gender" type="text" class="form-control text-center" id="editUserGender" required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserRole" class="form-label">Role</label>
-          <input v-model="user.userRole" type="text" step="0.01" class="form-control text-center" id="editUserRole"
-            required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserEmailAdd" class="form-label">Email Address</label>
-          <input v-model="user.emailAdd" type="email" step="0.01" class="form-control text-center" id="editUserEmailAdd"
-            required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserPass" class="form-label">User Password</label>
-          <input v-model="user.userPass" type="text" step="0.01" class="form-control text-center" id="editUserPass"
-            required>
-        </div>
-        <div class="mb-3">
-          <label for="editUserProfile" class="form-label">Profile Pic</label>
-          <input v-model="user.userProfile" type="url" step="0.01" class="form-control text-center" id="editUserProfile"
-            required>
-        </div>
-        <div class="pb-3">
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>
-      <div v-else>
-        <Spinner />
+  <div class="container pb-4">
+    <form id="editUserForm" v-if="user" @submit.prevent="updateUser">
+      <div class="mb-3">
+        <img class="imgUrl" :src=user.imgUrl alt="">
       </div>
-  
+      <div class="mb-3">
+        <label for="editUserName" class="form-label">Name</label>
+        <input v-model="user.name" type="text" class="form-control text-center" id="editUserName" required>
+      </div>
+      <div class="mb-3">
+        <label for="editUserSurname" class="form-label">Surname</label>
+        <input v-model="user.surname" type="text" class="form-control text-center" id="editUserSurname" required>
+      </div>
+      <div class="mb-3">
+        <label for="editUserGender" class="form-label">Gender</label>
+        <input v-model="user.gender" type="text" class="form-control text-center" id="editUserGender" required>
+      </div>
+      <div class="mb-3">
+        <label for="editUserEmail" class="form-label">Email Address</label>
+        <input v-model="user.email" type="email" step="0.01" class="form-control text-center" id="editUserEmail"
+          required>
+      </div>
+      <div class="mb-3">
+        <label for="editUserPassword" class="form-label">User Password</label>
+        <input v-model="user.password" type="text" step="0.01" class="form-control text-center" id="editUserPassword"
+          required>
+      </div>
+      <div class="mb-3">
+        <label for="editUserProfile" class="form-label">Profile Pic</label>
+        <input v-model="user.imgUrl" type="url" step="0.01" class="form-control text-center" id="editUserProfile"
+          required>
+      </div>
+      <div class="mb-3">
+        <label for="editUserRole" class="form-label">User Role</label>
+        <input v-model="user.role" type="text" step="0.01" class="form-control text-center" id="editUserRole" required>
+      </div>
+      <div class="pb-3">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    <div v-else>
+      <Spinner />
     </div>
-  </template>
-  
-  <script>
-  import Spinner from '@/components/SpinnerComp.vue'
-  
-  export default {
-    methods: {
-      fetchUser() {
-        this.$store.dispatch('fetchUser', this.$route.params.id)
-      },
-      updateUser() {
-        this.$store.dispatch('updateUser', this.user)
-          .then(() => {
-            this.$router.push('/admin');
-          })
-          .catch(err => {
-            console.error("Failed to update user:", err);
-          });
-      },
+
+  </div>
+</template>
+
+<script>
+import Spinner from '@/components/SpinnerComp.vue'
+
+export default {
+  methods: {
+    fetchUser() {
+      this.$store.dispatch('fetchUser', this.$route.params.id)
     },
-    computed: {
-      user() {
-        return this.$store.state.user;
-      }
+    updateUser() {
+      this.$store.dispatch('updateUser', this.user)
+        .then(() => {
+          this.$router.push('/admin');
+        })
+        .catch(err => {
+          console.error("Failed to update user:", err);
+        });
     },
-    components: {
-      Spinner
-    },
-    mounted() {
-      this.fetchUser();
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
     }
+  },
+  components: {
+    Spinner
+  },
+  mounted() {
+    this.fetchUser();
   }
-  </script>
-  
-  <style>
-  img {
-    width: 15rem;
-  }
-  </style>
+}
+</script>
+
+<style>
+img {
+  width: 15rem;
+}
+</style>

@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-      <h5>Products</h5>
-      <input v-model="searchQuery" placeholder="Search Products..." class="form-control mb-3" />
-      <div class="table-responsive" v-if="filteredProducts.length">
-        <table class="table table-products">
+      <h5>Supplements</h5>
+      <input v-model="searchQuery" placeholder="Search Supplements..." class="form-control mb-3" />
+      <div class="table-responsive" v-if="filteredSupplements.length">
+        <table class="table table-supplements">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -16,19 +16,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in filteredProducts" :key="product.prodID">
-              <td>{{ product.prodID }}</td>
-              <td>{{ product.prodName }}</td>
-              <td class="d-none d-sm-table-cell">{{ product.category }}</td>
-              <td class="d-none d-md-table-cell">{{ product.quantity }}</td>
-              <td class="d-none d-md-table-cell">R{{ product.amount }}</td>
+            <tr v-for="supplement in filteredSupplements" :key="supplement.id">
+              <td>{{ supplement.id }}</td>
+              <td>{{ supplement.name }}</td>
+              <td class="d-none d-sm-table-cell">{{ supplement.category }}</td>
+              <td class="d-none d-md-table-cell">{{ supplement.quantity }}</td>
+              <td class="d-none d-md-table-cell">R{{ supplement.price }}</td>
               <td>
-                <router-link :to="{ name: 'productEdit', params: { id: product.prodID } }">
+                <!-- <router-link :to="{ name: 'supplementEdit', params: { id: supplement.id } }">
                   <button class="btn btn-sm"><i class="bi bi-pencil-square"></i></button>
-                </router-link>
+                </router-link> -->
               </td>
               <td>
-                <button class="btn btn-sm" @click="deleteProduct(product.prodID)"><i
+                <button class="btn btn-sm" @click="deleteSupplement(supplement.id)"><i
                     class="bi bi-trash-fill"></i></button>
               </td>
             </tr>
@@ -37,13 +37,13 @@
       </div>
       <div v-else>
         <Spinner v-if="loading" />
-        <p v-else>No products found.</p>
+        <p v-else>No supplements found.</p>
       </div>
       <div class="d-flex justify-content-center align-items-center">
-        <p class="my-auto">Add Product</p>
-        <router-link :to="{ name: 'productAdd' }">
+        <p class="my-auto">Add Supplement</p>
+        <!-- <router-link :to="{ name: 'supplementAdd' }">
           <i class="bi-plus-square-fill mx-2"></i>
-        </router-link>
+        </router-link> -->
       </div>
   <hr>
     </div>
@@ -61,35 +61,35 @@
       };
     },
     computed: {
-      products() {
-        return this.$store.state.products || [];  
+      supplements() {
+        return this.$store.state.supplements || [];  
       },
-      filteredProducts() {
-        return this.products.filter(product =>
-          product.prodName.toLowerCase().includes(this.searchQuery.toLowerCase())
+      filteredSupplements() {
+        return this.supplements.filter(supplement =>
+          supplement.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       },
     },
     methods: {
-      fetchProducts() {
+      fetchSupplements() {
         this.loading = true;
-        this.$store.dispatch('fetchProducts')
+        this.$store.dispatch('fetchSupplements')
           .then(() => {
             this.loading = false;
           })
           .catch(err => {
-            this.error = 'Failed to fetch products.';
+            this.error = 'Failed to fetch supplements.';
             console.error(err);
           });
       },
-      deleteProduct(productID) {
-        if (confirm('Are you sure you want to delete this product?')) {
-          this.$store.dispatch('deleteProduct', productID)
+      deleteSupplement(id) {
+        if (confirm('Are you sure you want to delete this supplement?')) {
+          this.$store.dispatch('deleteSupplement', id)
             .then(() => {
-              this.fetchProducts();
+              this.fetchSupplements();
             })
             .catch(err => {
-              console.error('Failed to delete product:', err);
+              console.error('Failed to delete supplement:', err);
             });
         }
       }
@@ -98,7 +98,7 @@
       Spinner,
     },
     mounted() {
-      this.fetchProducts();
+      this.fetchSupplements();
     }
   };
   </script>
@@ -108,16 +108,16 @@
     max-width: 100%;
   }
   
-  .table-products th,
-  .table-products td {
+  .table-supplements th,
+  .table-supplements td {
     white-space: nowrap;
     vertical-align: middle;
   }
   
   @media (max-width: 575px) {
   
-    .table-products th,
-    .table-products td {
+    .table-supplements th,
+    .table-supplements td {
       font-size: 0.8rem;
     }
   }
