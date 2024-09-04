@@ -15,13 +15,13 @@ const insertUser = async (req, res) => {
 
         hash(password, 10, async (err, hashedP) => {
             if (err) {
-                return res.status(404).send('Error with password');
+                return res.status(401).send('Error with password');
             }
             try {
                 await insertUserDb(name, surname, gender, email, hashedP, imgUrl);
                 res.status(200).send('User was registered successfully');
             } catch (dbError) {
-                res.status(404).send('Error while registering user');
+                res.status(500).send('Error while registering user');
             }
         });
     } catch (error) {
