@@ -28,7 +28,7 @@ const loginUserDb = async(email) =>{
 const insertUserDb = async(name, surname, gender, email, password, imgUrl) =>{
     await pool.query(`
         INSERT INTO users (name, surname, gender, email, password, imgUrl)
-        VALUES (?,?,?,?,?,?,?)
+        VALUES (?,?,?,?,?,?)
         `, [name, surname, gender, email, password, imgUrl])
 }
 
