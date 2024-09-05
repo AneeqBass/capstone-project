@@ -33,13 +33,13 @@ const deleteEquipment = async (req, res) => {
 const updateEquipment = async (req, res) => {
     try {
         let { name, price, quantity, quantityDueMaintenance, imgUrl } = req.body;
-        let Equipment = await getEquipmentDb(req.params.id);
+        let equipment = await getEquipmentDb(req.params.id);
 
-        name?name=name:name = Equipment.name
-        price?price=price:price = Equipment.price
-        quantity?quantity=quantity:quantity = Equipment.quantity
-        quantityDueMaintenance?quantityDueMaintenance=quantityDueMaintenance:quantityDueMaintenance = Equipment.quantityDueMaintenance
-        imgUrl?imgUrl=imgUrl:imgUrl = Equipment.imgUrl
+        name?name=name:name = equipment.name
+        price?price=price:price = equipment.price
+        quantity?quantity=quantity:quantity = equipment.quantity
+        quantityDueMaintenance?quantityDueMaintenance=quantityDueMaintenance:quantityDueMaintenance = equipment.quantityDueMaintenance
+        imgUrl?imgUrl=imgUrl:imgUrl = equipment.imgUrl
          
         await updateEquipmentDb(name, price, quantity, quantityDueMaintenance, imgUrl, req.params.id);
         res.status(200).send('Equipment was updated successfully');
