@@ -1,38 +1,38 @@
 <template>
     <div class="container">
-        <form id="editProductForm" v-if="product" @submit.prevent="updateProduct">
+        <form id="editSupplementForm" v-if="supplement" @submit.prevent="updateSupplement">
             <div class="mb-3">
-                <img class="prodImg" :src="product.prodURL" alt="" />
+                <img class="prodImg" :src="supplement.imgUrl" alt="" />
             </div>
             <div class="mb-3">
-                <label for="editProductName" class="form-label">Product Name</label>
-                <input v-model="product.prodName" type="text" class="form-control text-center" id="editProductName"
+                <label for="editSupplementName" class="form-label">Name</label>
+                <input v-model="supplement.name" type="text" class="form-control text-center" id="editSupplementName"
                     required />
             </div>
             <div class="mb-3">
-                <label for="editProductDescription" class="form-label">Product Description</label>
-                <input v-model="product.description" type="text" class="form-control text-center"
-                    id="editProductDescription" required />
-            </div>
-            <div class="mb-3">
-                <label for="editProductCategory" class="form-label">Category</label>
-                <input v-model="product.category" type="text" class="form-control text-center" id="editProductCategory"
+                <label for="editSupplementDescription" class="form-label">Description</label>
+                <input v-model="supplement.description" type="text" class="form-control text-center" id="editSupplementDescription"
                     required />
             </div>
             <div class="mb-3">
-                <label for="editProductImage" class="form-label">Image URL</label>
-                <input v-model="product.prodURL" type="url" class="form-control text-center" id="editProductImage"
+                <label for="editSupplementCategory" class="form-label">Category</label>
+                <input v-model="supplement.category" type="text" class="form-control text-center" id="editSupplementCategory"
                     required />
             </div>
             <div class="mb-3">
-                <label for="editProductQuantity" class="form-label">Quantity</label>
-                <input v-model="product.quantity" type="number" step="0.01" class="form-control text-center"
-                    id="editProductQuantity" required />
+                <label for="editSupplementPrice" class="form-label">Price</label>
+                <input v-model="supplement.price" type="number" step="0.01" class="form-control text-center"
+                    id="editSupplementPrice" required />
             </div>
             <div class="mb-3">
-                <label for="editProductPrice" class="form-label">Price</label>
-                <input v-model="product.amount" type="number" step="0.01" class="form-control text-center"
-                    id="editProductPrice" required />
+                <label for="editSupplementQuantity" class="form-label">Quantity</label>
+                <input v-model="supplement.quantity" type="number" class="form-control text-center"
+                    id="editSupplementQuantity" required />
+            </div>
+            <div class="mb-3">
+                <label for="editSupplementImage" class="form-label">Image URL</label>
+                <input v-model="supplement.imgUrl" type="url" class="form-control text-center"
+                    id="editSupplementImage" />
             </div>
             <div class="pb-3">
                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -52,30 +52,30 @@ export default {
         return {};
     },
     methods: {
-        fetchProduct() {
-            this.$store.dispatch("fetchProduct", this.$route.params.id);
+        fetchSupplement() {
+            this.$store.dispatch("fetchSupplement", this.$route.params.id);
         },
-        updateProduct() {
+        updateSupplement() {
             this.$store
-                .dispatch("updateProduct", this.product)
+                .dispatch("updateSupplement", this.supplement)
                 .then(() => {
                     this.$router.push("/admin");
                 })
                 .catch((err) => {
-                    console.error("Failed to update product:", err);
+                    console.error("Failed to update supplement:", err);
                 });
         },
     },
     computed: {
-        product() {
-            return this.$store.state.product;
+        supplement() {
+            return this.$store.state.supplement;
         },
     },
     components: {
         Spinner,
     },
     mounted() {
-        this.fetchProduct();
+        this.fetchSupplement();
     },
 };
 </script>

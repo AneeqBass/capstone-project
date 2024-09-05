@@ -32,8 +32,8 @@
                         <h5 class="card-title">{{ equipment.category }}</h5>
                         <p class="lead"><span class="text-success">Quantity</span>: {{ equipment.quantity }}</p>
                         <p class="lead"><span class="text-success">Price</span>: R{{ equipment.price }}</p>
-                        <!-- <router-link :to="{ name: 'equipmentDetail', params: { id: equipment.id } }"><i
-                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link> -->
+                        <router-link :to="{ name: 'equipmentDetail', params: { id: equipment.id } }"><i
+                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link>
                     </template>
                 </Card>
             </div>

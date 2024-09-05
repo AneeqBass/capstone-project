@@ -41,7 +41,7 @@ export default {
                 price: 0,
                 quantity: 0,
                 quantityDueMaintenance: 0,
-                imgUrl: '',
+                imgUrl: null,
                 createdUserId: 1
             }
         };

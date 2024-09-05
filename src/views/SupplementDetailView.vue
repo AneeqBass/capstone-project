@@ -1,17 +1,17 @@
 <template>
     <div class="container">
-        <div class="singleProduct">
-            <div class="row justify-content-center" v-if="product">
+        <div class="singleSupplement">
+            <div class="row justify-content-center" v-if="supplement">
                 <div>
-                    {{ product.productURL }}
-                    <img :src="product.prodURL" loading="lazy" class="img-fluid prodImg" :alt="product.prodName">
+                    {{ supplement.imgUrl }}
+                    <img :src="supplement.imgUrl" loading="lazy" class="img-fluid prodImg" :alt="supplement.name">
                 </div>
                 <div>
-                    <h5 class="card-title">{{ product.prodName }}</h5>
-                    <h5 class="card-title">{{ product.category }}</h5>
-                    <p class="">{{ product.description }}</p>
-                    <p class="lead"><span class="text-success">Quantity</span>: {{ product.quantity }}</p>
-                    <p class="lead"><span class="text-success">Amount</span>: R{{ product.amount }}</p>
+                    <h5 class="card-title">{{ supplement.name }}</h5>
+                    <h5 class="card-title">{{ supplement.category }}</h5>
+                    <p class="">{{ supplement.description }}</p>
+                    <p class="lead"><span class="text-success">Quantity</span>: {{ supplement.quantity }}</p>
+                    <p class="lead"><span class="text-success">Price</span>: R{{ supplement.price }}</p>
                 </div>
             </div>
             <div v-else>
@@ -26,28 +26,28 @@ import Spinner from '@/components/SpinnerComp.vue'
 
 export default {
     methods: {
-        fetchProducts() {
-            this.$store.dispatch('fetchProducts')
+        fetchSupplements() {
+            this.$store.dispatch('fetchSupplements')
         },
-        products() {
-            return this.$store.state.products;
+        supplements() {
+            return this.$store.state.supplements;
         },
-        fetchProduct() {
-            this.$store.dispatch('fetchProduct', this.$route.params.id)
+        fetchSupplement() {
+            this.$store.dispatch('fetchSupplement', this.$route.params.id)
         },
 
 
     },
     computed: {
-        product() {
-            return this.$store.state.product;
+        supplement() {
+            return this.$store.state.supplement;
         }
     },
     components: {
         Spinner,
     },
     mounted() {
-        this.fetchProduct()
+        this.fetchSupplement()
     }
 }
 </script>
