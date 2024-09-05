@@ -42,7 +42,7 @@ export default {
         gender: '',
         email: '',
         password: '',
-        imgUrl: ''
+        imgUrl: null
       }
     };
   },
