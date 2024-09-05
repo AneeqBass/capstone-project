@@ -22,18 +22,18 @@
             </div>
 
             <div class="row justify-content-center" v-if="filteredSupplements.length">
-                <Card data-aos="fade-up" v-for="equipment in sortedSupplements" :key="equipment.id">
+                <Card data-aos="fade-up" v-for="supplement in sortedSupplements" :key="supplement.id">
                     <template #cardHeader>
-                        <img :src="equipment.imgUrl" loading="lazy"
-                            class="small-img img-fluid rounded mx-auto d-block card-img-top" :alt="equipment.name">
+                        <img :src="supplement.imgUrl" loading="lazy"
+                            class="small-img img-fluid rounded mx-auto d-block card-img-top" :alt="supplement.name">
                     </template>
                     <template #cardBody>
-                        <h5 class="card-title">{{ equipment.name }}</h5>
-                        <h5 class="card-title">{{ equipment.category }}</h5>
-                        <p class="lead"><span class="text-success">Quantity</span>: {{ equipment.quantity }}</p>
-                        <p class="lead"><span class="text-success">Price</span>: R{{ equipment.price }}</p>
-                        <!-- <router-link :to="{ name: 'equipmentDetail', params: { id: equipment.id } }"><i
-                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link> -->
+                        <h5 class="card-title">{{ supplement.name }}</h5>
+                        <h5 class="card-title">{{ supplement.category }}</h5>
+                        <p class="lead"><span class="text-success">Quantity</span>: {{ supplement.quantity }}</p>
+                        <p class="lead"><span class="text-success">Price</span>: R{{ supplement.price }}</p>
+                        <router-link :to="{ name: 'supplementDetail', params: { id: supplement.id } }"><i
+                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link>
                     </template>
                 </Card>
             </div>
@@ -64,14 +64,14 @@ export default {
             if (!this.$store.state.supplements || !this.$store.state.supplements.length) {
                 return []; 
             }
-            const categories = this.$store.state.supplements.map(equipment => equipment.category);
+            const categories = this.$store.state.supplements.map(supplement => supplement.category);
             return [...new Set(categories)];
         },
         filteredSupplements() {
             if (!this.selectedCategory) {
                 return this.supplements();
             }
-            return this.supplements().filter(equipment => equipment.category === this.selectedCategory);
+            return this.supplements().filter(supplement => supplement.category === this.selectedCategory);
         },
         sortedSupplements() {
             return [...this.filteredSupplements].sort((a, b) => {

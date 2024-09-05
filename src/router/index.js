@@ -27,19 +27,34 @@ const routes = [
     component: () => import(/* webpackChunkName: "equipment" */ '../views/SupplementsView.vue')
   },
   {
-    path: '/productDetail/:id',
-    name: 'productDetail',
-    component: () => import(/* webpackChunkName: "productDetail" */ '../views/ProductDetailView.vue')
+    path: '/supplementDetail/:id',
+    name: 'supplementDetail',
+    component: () => import(/* webpackChunkName: "supplementDetail" */ '../views/SupplementDetailView.vue')
   },
   {
-    path: '/productAdd/',
-    name: 'productAdd',
-    component: () => import(/* webpackChunkName: "productAdd" */ '../views/ProductAddView.vue')
+    path: '/supplementAdd/',
+    name: 'supplementAdd',
+    component: () => import(/* webpackChunkName: "supplementAdd" */ '../views/SupplementAddView.vue')
   },
   {
-    path: '/productEdit/:id',
-    name: 'productEdit',
-    component: () => import(/* webpackChunkName: "productEdit" */ '../views/ProductEditView.vue')
+    path: '/supplementEdit/:id',
+    name: 'supplementEdit',
+    component: () => import(/* webpackChunkName: "supplementEdit" */ '../views/SupplementEditView.vue')
+  },
+  {
+    path: '/equipmentDetail/:id',
+    name: 'equipmentDetail',
+    component: () => import(/* webpackChunkName: "equipmentDetail" */ '../views/EquipmentDetailView.vue')
+  },
+  {
+    path: '/equipmentAdd/',
+    name: 'equipmentAdd',
+    component: () => import(/* webpackChunkName: "equipmentAdd" */ '../views/EquipmentAddView.vue')
+  },
+  {
+    path: '/equipmentEdit/:id',
+    name: 'equipmentEdit',
+    component: () => import(/* webpackChunkName: "equipmentEdit" */ '../views/EquipmentEditView.vue')
   },
   {
     path: '/userAdd/',
