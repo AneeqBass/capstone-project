@@ -1,6 +1,7 @@
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { loginUserDb } from '../model/usersDB.js';
 
 dotenv.config();
 
