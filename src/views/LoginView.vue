@@ -1,49 +1,51 @@
-<!-- src/views/LoginPage.vue -->
 <template>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form @submit.prevent="handleLogin">
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input type="text" v-model="email" id="email" required />
-      </div>
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" v-model="password" id="password" required />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+  <div class="vh-100">
+    <div class="login-container">
+      <h2>Login</h2>
+      <form @submit.prevent="handleLogin" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" v-model="email" id="email" class="form-control" required />
+          <div class="invalid-feedback">Please enter a valid email.</div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" v-model="password" id="password" class="form-control" required />
+          <div class="invalid-feedback">Please enter your password.</div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </form>
+    </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
     };
   },
   methods: {
     handleLogin() {
-      // Add your login logic here
-      if (this.username && this.password) {
-        alert(`Username: ${this.username}\nPassword: ${this.password}`);
-      } else {
-        alert("Please fill in both fields.");
-      }
+      this.$store.dispatch("login", { email: this.email, password: this.password });
     },
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
+.login-page {
+  padding-top: 3rem; /* Adjust this value to match the height of your fixed navbar */
+}
+
 .login-container {
   background-color: #2e2e30;
   color: white;
-  margin: 100px auto;
-  padding: 20px;
-  width: 300px;
+  margin: 0 auto;
+  padding: 30px;
+  max-width: 400px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
@@ -54,37 +56,32 @@ h2 {
   font-family: "911porschav3", sans-serif;
 }
 
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
+.form-label {
   font-size: 14px;
 }
 
-.input-group input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #fc3699;
+.form-control {
+  background-color: #1f1f21;
   color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+  border: 1px solid #4d4d4f;
 }
 
-button:hover {
+.form-control:focus {
+  background-color: #28282a;
+  border-color: #fc3699;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: #fc3699;
+  border: none;
+}
+
+.btn-primary:hover {
   background-color: #df0056;
 }
+
+.invalid-feedback {
+  color: #fc3699;
+}
 </style>
-  

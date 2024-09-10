@@ -1,5 +1,6 @@
 <template>
   <div class="container admin">
+    <h1 class="mb-2 text-start">/Admin</h1>
     <AdminEquipment />
     <AdminSupplement />
     <AdminUsers />

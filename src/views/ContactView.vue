@@ -1,7 +1,7 @@
 <template>
     <div class="contact">
         <div class="container text-white bg-transparent with-blur-backdrop rounded">
-            <h1 class="text-center contactMain">CONTACT US:</h1>
+            <h1 class="mb-2 text-start">/Contact us:</h1>
             <form action="https://formspree.io/f/mgvwwenn" class="row g-3" method="POST" target="_blank">
                 <div data-aos="fade-down" class="col-md-6 order-md-2">
                     <img src="https://aneeqbass.github.io/ecommerceImages/contactImg.jpg" class="img-thumbnail cont-img"
