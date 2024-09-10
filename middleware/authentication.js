@@ -1,33 +1,35 @@
-import { compare } from "bcrypt"
-import { loginUserDb } from "../model/usersDB.js"
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-dotenv.config()
+import { compare } from "bcrypt";
+import { loginUserDb } from "../model/usersDB.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-const checkUser = async(req,res,next)=>{
-    const {email,password} = req.body
-    let hashedPassword = (await loginUserDb(email)).password
-    
-    console.log(hashedPassword);
+dotenv.config();
 
+const checkUser = async (req, res, next) => {
+    const { email, password } = req.body;
     try {
-        compare(password, hashedPassword, (err, result) => {
+        const user = await loginUserDb(email);
+
+        if (!user) {
+            return res.status(401).send("User not found");
+        }
+
+        compare(password, user.password, (err, result) => {
             if (err) {
-                return res.status(500).send('Internal server error');
+                return res.status(500).send("Internal server error");
             }
-            
+
             if (result) {
-                let token = jwt.sign({ email: email }, process.env.SECRET_KEY, { expiresIn: '1h' });
-                console.log(token);
+                const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: "1h" });
                 req.body.token = token;
                 next();
-                return;
             } else {
-                res.status(401).send('Your password is incorrect');
+                res.status(401).send("Incorrect password");
             }
         });
     } catch (error) {
-        res.status(500).send('An unexpected error occurred');
+        res.status(500).send("An unexpected error occurred");
     }
-}
-export {checkUser}
+};
+
+export { checkUser };
