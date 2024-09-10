@@ -66,8 +66,9 @@ const updateUser = async (req, res) => {
     }
 };
 
-const loginUser = async(req,res)=>{
-    res.json({message:"You have logged in successfully", token:req.body.token})
+const loginUser = async (req, res) => {
+    const token = req.body.token;
+    res.json({ message: "Login successful", token });
 };
 
 
