@@ -4,7 +4,7 @@
       <div class="container-fluid m-auto">
         <router-link to="/" class="nav-link">
           <img src="https://aneeqbass.github.io/fitquip_images/fitbitlogotransparentemblem.png" class="logo"
-            loading="lazy" alt="" />
+            loading="lazy" alt="Logo" />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,28 @@
               <router-link to="/contact" class="nav-link">Contact</router-link>
             </li>
           </ul>
+          <!-- Profile Section -->
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="currentUser.imgUrl || 'https://codjoelmayer.github.io/projectImages/images/profile-Image.png'" alt="Profile" class="rounded-circle profile-img me-2" />
+                <span>{{ currentUser.name || 'Guest' }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <li>
+                  <router-link to="/profile" class="dropdown-item">Profile</router-link>
+                </li>
+                <li>
+                  <router-link to="/settings" class="dropdown-item">Settings</router-link>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a @click="handleLogout" class="dropdown-item">Logout</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -40,6 +62,22 @@
 <script>
 export default {
   name: "NavBarComp",
+  methods: {
+    fetchCurrentUser() {
+      this.$store.dispatch('fetchCurrentUser');
+    },
+    handleLogout() {
+      this.$store.dispatch("logout");
+    },
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.currentUser || {}; // Default to an empty object if currentUser is not defined
+    },
+  },
+  mounted() {
+    this.fetchCurrentUser();
+  }
 };
 </script>
 
@@ -56,12 +94,10 @@ export default {
 
 .navbar .nav-link:hover {
   color: #e21861;
-  /* Hover color */
 }
 
 .router-link-active {
   color: #e21861 !important;
-  /* Active link color */
 }
 
 .logo {
@@ -73,5 +109,24 @@ export default {
 
 .navbar-toggler-icon {
   background-color: white;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.dropdown-item {
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #e21861;
+  color: white;
 }
 </style>

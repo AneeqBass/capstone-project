@@ -57,7 +57,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "equipmentEdit" */ '../views/EquipmentEditView.vue')
   },
   {
-    path: '/userAdd/',
+    path: '/register/',
     name: 'userAdd',
     component: () => import(/* webpackChunkName: "userAdd" */ '../views/UserAddView.vue')
   },
@@ -70,6 +70,16 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: () => import(/* webpackChunkName: "admin" */ '../views/AdminView.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
+  },
+  {
+    path: '/report',
+    name: 'report',
+    component: () => import(/* webpackChunkName: "report" */ '../views/ReportView.vue')
   }
 ]
 

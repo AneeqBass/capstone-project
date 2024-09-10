@@ -36,7 +36,7 @@
           <br>
           <h4>Contact Us</h4>
           <li>Phone: 021 345 6789</li>
-          <li>Email: techfit@gmail.com</li>
+          <li>Email: FitQuip@gmail.com</li>
           <li>Location: Cape Town</li>
           <div class="d-flex justify-content-evenly p-2">
             <li><i class="bi bi-facebook"></i></li>
@@ -49,7 +49,7 @@
     <div class="container text-center">
       <div class="row align-items-start">
         <div class="col pt-3">
-          <h6><span>&copy;</span>Copyright | TechFit | All rights reserved</h6>
+          <h6><span>&copy;</span>Copyright | FitQuip | All rights reserved</h6>
         </div>
       </div>
     </div>
