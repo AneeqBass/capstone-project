@@ -1,20 +1,18 @@
-import express from 'express'
-import {fetchUsers,fetchUser,insertUser,deleteUser,updateUser,loginUser} from '../controller/usersController.js'
-import { checkUser } from '../middleware/authentication.js'
-// import {createToken,verifyAToken} from '../middleware/authentication.js'
+import express from 'express';
+import { fetchUsers, fetchUser, insertUser, deleteUser, updateUser, loginUser, getCurrentUser } from '../controller/usersController.js';
+import { checkUser } from '../middleware/authentication.js';
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', fetchUsers)
+// Public Routes
+router.get('/', fetchUsers);         // Fetch all users
+router.get('/:id', fetchUser);       // Fetch user by ID
+router.post('/login', checkUser, loginUser);  // Login user
 
-router.get('/:id', fetchUser)
+// Protected Routes
+router.get('/me', checkUser, getCurrentUser); // Fetch the current user's details
+router.post('/register', insertUser); // Register a new user
+router.patch('/update/:id', updateUser); // Update user by ID
+router.delete('/delete/:id', deleteUser); // Delete user by ID
 
-router.post('/login', checkUser, loginUser)
-
-router.post('/register', insertUser)
-
-router.patch('/update/:id', updateUser)
-
-router.delete('/delete/:id', deleteUser)
-
-export default router
+export default router;

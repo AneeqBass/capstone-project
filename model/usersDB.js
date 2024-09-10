@@ -50,4 +50,5 @@ const updateUserDb = async(name, surname, gender, email, password, imgUrl, role,
     [name, surname, gender, email, password, imgUrl, role, id])
 }
 
-export {getUsersDb, getUserDb, insertUserDb, deleteUserDb, updateUserDb, loginUserDb}
+
+export { getUsersDb, getUserDb, insertUserDb, deleteUserDb, updateUserDb, loginUserDb };
