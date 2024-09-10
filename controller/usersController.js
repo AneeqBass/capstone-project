@@ -1,4 +1,4 @@
-import {getUsersDb, getUserDb, insertUserDb, deleteUserDb, updateUserDb} from '../model/usersDB.js'
+import {getUsersDb, getUserDb, insertUserDb, deleteUserDb, updateUserDb, loginUserDb} from '../model/usersDB.js'
 import { hash } from 'bcrypt'
 
 const fetchUsers = async(req,res) =>{
@@ -71,7 +71,20 @@ const loginUser = async (req, res) => {
     res.json({ message: "Login successful", token });
 };
 
+const getCurrentUser = async (req, res) => {
+    try {
+      const email = req.user.email; 
+      const user = await loginUserDb(email);
+  
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).send('User not found');
+      }
+    } catch (error) {
+      res.status(500).send('An error occurred while fetching the user');
+    }
+  };
 
 
-
-export{fetchUsers,fetchUser,insertUser,deleteUser,updateUser,loginUser}
+  export { fetchUsers, fetchUser, insertUser, deleteUser, updateUser, loginUser, getCurrentUser };
