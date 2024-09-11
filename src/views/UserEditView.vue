@@ -2,7 +2,7 @@
   <div class="container pb-4">
     <form id="editUserForm" v-if="user" @submit.prevent="updateUser">
       <div class="mb-3 text-center">
-        <img class="imgUrl" :src="user.imgUrl" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%;">
+        <img class="imgUrl" :src="user.imgUrl || 'https://codjoelmayer.github.io/projectImages/images/profile-Image.png'" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%;">
       </div>
       <div class="mb-3">
         <label for="editUserName" class="form-label">Name</label>
