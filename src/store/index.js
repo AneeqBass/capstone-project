@@ -9,10 +9,8 @@ export default createStore({
   state: {
     users: null,
     user: null, // Current user details
-    supplements: null,
-    supplement: null,
-    equipments: null,
-    equipment: null,
+    stocks: null,
+    stock: null,
   },
   mutations: {
     setUsers(state, payload) {
@@ -25,17 +23,11 @@ export default createStore({
       state.currentUser = user;
       console.log("user =" + user);
     },
-    setEquipments(state, payload) {
-      state.equipments = payload;
+    setStocks(state, payload) {
+      state.stocks = payload;
     },
-    setEquipment(state, payload) {
-      state.equipment = payload;
-    },
-    setSupplements(state, payload) {
-      state.supplements = payload;
-    },
-    setSupplement(state, payload) {
-      state.supplement = payload;
+    setStock(state, payload) {
+      state.stock = payload;
     },
     clearUser(state) {
       state.user = null;
@@ -188,11 +180,11 @@ export default createStore({
         });
       }
     },
-    async fetchEquipments({ commit }) {
+    async fetchStocks({ commit }) {
       try {
-        const { data, msg } = await axiosInstance.get("equipment");
+        const { data, msg } = await axiosInstance.get("stocks");
         if (data) {
-          commit("setEquipments", data.results || data);
+          commit("setStocks", data.results || data);
         } else {
           toast.error(msg, { autoClose: 3000 });
         }
@@ -203,11 +195,11 @@ export default createStore({
         });
       }
     },
-    async fetchEquipment({ commit }, id) {
+    async fetchStock({ commit }, id) {
       try {
-        const { data, msg } = await axiosInstance.get(`equipment/${id}`);
+        const { data, msg } = await axiosInstance.get(`stocks/${id}`);
         if (data) {
-          commit("setEquipment", data.result || data);
+          commit("setStock", data.result || data);
         } else {
           toast.error(msg, {
             autoClose: 3000,
@@ -221,14 +213,14 @@ export default createStore({
         });
       }
     },
-    async addEquipment({ dispatch }, payload) {
+    async addStock({ dispatch }, payload) {
       try {
         const { msg } = await axiosInstance.post(
-          "equipment/addEquipment",
+          "stocks/addStock",
           payload
         );
         if (msg) {
-          dispatch("fetchEquipments");
+          dispatch("fetchStocks");
           toast.success(msg, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER,
@@ -241,14 +233,14 @@ export default createStore({
         });
       }
     },
-    async updateEquipment({ dispatch }, payload) {
+    async updateStock({ dispatch }, payload) {
       try {
         const { msg } = await axiosInstance.patch(
-          `equipment/update/${payload.id}`,
+          `stocks/update/${payload.id}`,
           payload
         );
         if (msg) {
-          dispatch("fetchEquipments");
+          dispatch("fetchStocks");
           toast.success(msg, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER,
@@ -261,101 +253,11 @@ export default createStore({
         });
       }
     },
-    async deleteEquipment({ dispatch }, id) {
+    async deleteStock({ dispatch }, id) {
       try {
-        const { msg } = await axiosInstance.delete(`equipment/delete/${id}`);
+        const { msg } = await axiosInstance.delete(`stocks/delete/${id}`);
         if (msg) {
-          dispatch("fetchEquipments");
-          toast.success(msg, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
-        }
-      } catch (e) {
-        toast.error(e.message, {
-          autoClose: 2000,
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-    },
-    async fetchSupplements({ commit }) {
-      try {
-        const { data, msg } = await axiosInstance.get("supplements");
-        if (data) {
-          commit("setSupplements", data.results || data);
-        } else {
-          toast.error(msg, { autoClose: 3000 });
-        }
-      } catch (error) {
-        toast.error(error.message, {
-          autoClose: 3000,
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-    },
-    async fetchSupplement({ commit }, id) {
-      try {
-        const { data, msg } = await axiosInstance.get(`supplements/${id}`);
-        if (data) {
-          commit("setSupplement", data.result || data);
-        } else {
-          toast.error(msg, {
-            autoClose: 3000,
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
-        }
-      } catch (error) {
-        toast.error(error.message, {
-          autoClose: 3000,
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-    },
-    async addSupplement({ dispatch }, payload) {
-      try {
-        const { msg } = await axiosInstance.post(
-          "supplements/addSupplement",
-          payload
-        );
-        if (msg) {
-          dispatch("fetchSupplements");
-          toast.success(msg, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
-        }
-      } catch (e) {
-        toast.error(e.message, {
-          autoClose: 2000,
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-    },
-    async updateSupplement({ dispatch }, payload) {
-      try {
-        const { msg } = await axiosInstance.patch(
-          `supplements/update/${payload.id}`,
-          payload
-        );
-        if (msg) {
-          dispatch("fetchSupplements");
-          toast.success(msg, {
-            autoClose: 2000,
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
-        }
-      } catch (e) {
-        toast.error(e.message, {
-          autoClose: 2000,
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-    },
-    async deleteSupplement({ dispatch }, id) {
-      try {
-        const { msg } = await axiosInstance.delete(`supplements/delete/${id}`);
-        if (msg) {
-          dispatch("fetchSupplements");
+          dispatch("fetchStocks");
           toast.success(msg, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER,

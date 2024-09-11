@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/supplements',
     name: 'supplements',
-    component: () => import(/* webpackChunkName: "supplements" */ '../views/SupplementsView.vue'),
+    component: () => import(/* webpackChunkName: "supplements" */ '../views/StocksView.vue'),
     meta: { requiresAuth: false }
   },
   {
@@ -50,24 +50,6 @@ const routes = [
     path: '/supplementEdit/:id',
     name: 'supplementEdit',
     component: () => import(/* webpackChunkName: "supplementEdit" */ '../views/SupplementEditView.vue'),
-    meta: { requiresAuth: true, role: 'ADMIN' }
-  },
-  {
-    path: '/equipmentDetail/:id',
-    name: 'equipmentDetail',
-    component: () => import(/* webpackChunkName: "equipmentDetail" */ '../views/EquipmentDetailView.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    path: '/equipmentAdd/',
-    name: 'equipmentAdd',
-    component: () => import(/* webpackChunkName: "equipmentAdd" */ '../views/EquipmentAddView.vue'),
-    meta: { requiresAuth: true, role: 'ADMIN' }
-  },
-  {
-    path: '/equipmentEdit/:id',
-    name: 'equipmentEdit',
-    component: () => import(/* webpackChunkName: "equipmentEdit" */ '../views/EquipmentEditView.vue'),
     meta: { requiresAuth: true, role: 'ADMIN' }
   },
   {
