@@ -40,12 +40,6 @@
       <Spinner v-if="loading" />
       <p v-else>No users found.</p>
     </div>
-    <div class="d-flex justify-content-center align-items-center mb-4">
-      <p class="my-auto">Add User</p>
-      <router-link :to="{ name: 'userAdd' }">
-          <i class="bi bi-plus-square-fill mx-2"></i>
-        </router-link>
-    </div>
   </div>
 </template>
 
