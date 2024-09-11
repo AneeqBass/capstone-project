@@ -1,48 +1,38 @@
-import { compare } from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { loginUserDb } from '../model/usersDB.js';
+import { config } from 'dotenv';
+import pkg from 'jsonwebtoken'
 
-dotenv.config();
+const { sign, verify } = pkg;
 
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+config(); 
 
-    if (token == null) return res.sendStatus(401);
-
-    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-};
-
-const checkUser = async (req, res, next) => {
-    const { email, password } = req.body;
+export function createToken(user) {
     try {
-        const user = await loginUserDb(email);
+        return sign({
+            id: user.id,
+            email: user.email
+        }, process.env.SECRET_KEY, { expiresIn: '7d' });
+    } catch (error) {
+        throw new Error('Token creation failed: ' + error.message);
+    }
+}
 
-        if (!user) {
-            return res.status(401).send("User not found");
-        }
-
-        compare(password, user.password, (err, result) => {
-            if (err) {
-                return res.status(500).send("Internal server error");
-            }
-
-            if (result) {
-                const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: "1h" });
-                req.body.token = token;
+export function verifyAToken(req, res, next) {
+    try {
+        const token = req.cookies["Valid User"];
+        if (token) {
+            const valid = verify(token, process.env.SECRET_KEY);
+            if (valid) {
+                req.authenticated = true;
+                req.user = valid; 
                 next();
             } else {
-                res.status(401).send("Incorrect password");
+                res.status(401).json({ err: "Invalid token" });
             }
-        });
-    } catch (error) {
-        res.status(500).send("An unexpected error occurred");
+        } else {
+            res.status(401).json({ err: "No token provided" });
+        }
+    } catch (e) {
+        res.status(400).json({ err: e.message });
     }
-};
-
-export { authenticateToken, checkUser };
+}
+// module.exports= {createToken, verifyAToken};
