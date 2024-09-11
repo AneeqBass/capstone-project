@@ -118,13 +118,27 @@ export default {
     supplements() {
       return this.$store.state.supplements;
     },
+    
   },
   components: {
     Spinner,
   },
   mounted() {
-    this.getEquipments();
-    this.getSupplements();
+    // Check if the page has already been reloaded
+    if (!localStorage.getItem('reloaded')) {
+      // Set flag to indicate the page has been reloaded
+      localStorage.setItem('reloaded', 'true');
+
+      // Reload the page
+      window.location.reload();
+    } else {
+      // Remove flag after reloading
+      localStorage.removeItem('reloaded');
+
+      // Fetch data after the reload
+      this.getEquipments();
+      this.getSupplements();
+    }
   },
 };
 </script>
