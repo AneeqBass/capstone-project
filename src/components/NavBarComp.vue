@@ -31,13 +31,15 @@
               <router-link to="/contact" class="nav-link">Contact</router-link>
             </li>
           </ul>
+
           <!-- Profile Section -->
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <img :src="currentUser.imgUrl || 'https://codjoelmayer.github.io/projectImages/images/profile-Image.png'" alt="Profile" class="rounded-circle profile-img me-2" />
-                <span>{{ currentUser.name || 'Guest' }}</span>
+                <img :src="user.imgUrl || 'https://codjoelmayer.github.io/projectImages/images/profile-Image.png'"
+                  alt="Profile" class="rounded-circle profile-img me-2" />
+                <span>{{ user.name|| 'Guest' }}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li>
@@ -46,7 +48,9 @@
                 <li>
                   <router-link to="/settings" class="dropdown-item">Settings</router-link>
                 </li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
                 <li>
                   <a @click="handleLogout" class="dropdown-item">Logout</a>
                 </li>
@@ -60,24 +64,36 @@
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
+
 export default {
   name: "NavBarComp",
+  data() {
+    return {
+      user: {},
+    };
+  },
+  created() {
+    this.getUserFromCookies();
+  },
   methods: {
-    fetchCurrentUser() {
-      this.$store.dispatch('fetchCurrentUser');
+    getUserFromCookies() {
+      const { cookies } = useCookies();
+      const user = cookies.get("user"); // Retrieve the user from the cookies
+      if (user) {
+        this.user = user; // Set the user data in the component state
+      } else {
+        this.user = { name: "Guest" }; // Default to guest if no user data is found
+      }
     },
     handleLogout() {
+      const { cookies } = useCookies();
+      cookies.remove("authToken");
+      cookies.remove("user");
       this.$store.dispatch("logout");
+      this.user = { name: "Guest" }; // Reset user to Guest after logout
     },
   },
-  computed: {
-    currentUser() {
-      return this.$store.state.currentUser || {}; // Default to an empty object if currentUser is not defined
-    },
-  },
-  mounted() {
-    this.fetchCurrentUser();
-  }
 };
 </script>
 

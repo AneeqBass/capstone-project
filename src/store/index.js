@@ -1,20 +1,18 @@
 import { createStore } from "vuex";
-import axiosInstance from "@/api/axiosInstance";
+import axiosInstance from "@/api/axiosInstance.js";
 import router from "@/router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { useCookies } from 'vue3-cookies';
 
 export default createStore({
   state: {
     users: null,
     user: null, // Current user details
-    currentUser: null, // New state for current user details
     supplements: null,
     supplement: null,
     equipments: null,
     equipment: null,
-    token: localStorage.getItem("token") || null,
-    isAuthenticated: !!localStorage.getItem("token"),
   },
   mutations: {
     setUsers(state, payload) {
@@ -39,28 +37,61 @@ export default createStore({
     setSupplement(state, payload) {
       state.supplement = payload;
     },
-    setToken(state, token) {
-      state.token = token;
-      state.isAuthenticated = !!token;
-      localStorage.setItem("token", token);
-    },
-    clearAuth(state) {
-      state.token = null;
-      state.isAuthenticated = false;
-      localStorage.removeItem("token");
-    },
+    clearUser(state) {
+      state.user = null;
+    }
   },
   actions: {
     async login({ commit }, payload) {
+      const { cookies } = useCookies();
       try {
-        const { data, msg } = await axiosInstance.post("users/login", payload);
+        const { data } = await axiosInstance.post(`users/login`, payload);
+        console.log(data);
+        
         if (data) {
-          commit("setToken", data.token || data);
+          commit("setUser", data.user || data);
+          cookies.set("authToken", data.token || data, { expires: "7d" });
+          cookies.set("user", data.user || data);
+          router.push({ name: "home" });
           toast.success("Login successful!", {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER,
           });
-          router.push({ name: "home" }); // Ensure "home" is a valid route name
+        } else {
+          toast.error(`${data.msg}`, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async logout({ commit }) {
+      const { cookies } = useCookies();
+      try {
+        cookies.remove("authToken");
+        commit("clearUser");
+        router.push({ name: "login" });
+        toast.success("Logout successful!", {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      } catch (e) {
+        toast.error("Logout failed.", {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async fetchUsers({ commit }) {
+      try {
+        const { data, msg } = await axiosInstance.get("users");
+        if (data) {
+          commit("setUsers", data.result || data);
         } else {
           toast.error(msg, {
             autoClose: 2000,
@@ -74,77 +105,69 @@ export default createStore({
         });
       }
     },
-    async logout({ commit }) {
-      commit("clearAuth");
-      router.push({ name: "login" }); // Ensure "login" is a valid route name
-    },
-    async fetchUsers({ commit }) {
-      try {
-        const { data, msg } = await axiosInstance.get("users");
-        if (data) {
-          commit("setUsers", data.result || data);
-        } else {
-          toast.error(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
-        }
-      } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
-      }
-    },
     async fetchUser({ commit }, id) {
       try {
         const { data, msg } = await axiosInstance.get(`users/${id}`);
         if (data) {
           commit("setUser", data.result || data);
         } else {
-          toast.error(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.error(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
-      }
-    },
-    async fetchCurrentUser({ commit }) {
-      console.log("fetchCurrentUser start");
-      try {
-        const { data, msg } = await axiosInstance.get("users/me", {
-          headers: {
-            Authorization: `Bearer ${this.state.token}`,
-          },
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
         });
-        console.log(data)
-        if (data) {
-          commit("setCurrentUser", data.result || data);
-        } else {
-          toast.error(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
-        }
-      } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
       }
-      console.log("fetchCurrentUser end");
     },
     async updateUser({ dispatch }, payload) {
       try {
-        const { msg, err } = await axiosInstance.patch(`users/update/${payload.id}`, payload);
+        const { msg, err } = await axiosInstance.patch(
+          `users/update/${payload.id}`,
+          payload
+        );
         if (msg) {
           dispatch("fetchUsers");
         } else {
-          toast.error(err, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.error(err, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async register({ dispatch }, payload) {
       try {
-        const { msg, err, token } = await axiosInstance.post("users/register", payload);
+        const { msg, err, token } = await axiosInstance.post(
+          "users/register",
+          payload
+        );
         if (token) {
           dispatch("fetchUsers");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
           router.push({ name: "login" }); // Ensure "login" is a valid route name
         } else {
-          toast.error(err, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.error(err, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async deleteUser({ dispatch }, id) {
@@ -153,10 +176,16 @@ export default createStore({
         if (msg) {
           dispatch("fetchUsers");
         } else {
-          toast.error(err, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.error(err, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async fetchEquipments({ commit }) {
@@ -168,7 +197,10 @@ export default createStore({
           toast.error(msg, { autoClose: 3000 });
         }
       } catch (error) {
-        toast.error(error.message, { autoClose: 3000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async fetchEquipment({ commit }, id) {
@@ -177,32 +209,56 @@ export default createStore({
         if (data) {
           commit("setEquipment", data.result || data);
         } else {
-          toast.error(msg, { autoClose: 3000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.error(msg, {
+            autoClose: 3000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (error) {
-        toast.error(error.message, { autoClose: 3000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async addEquipment({ dispatch }, payload) {
       try {
-        const { msg } = await axiosInstance.post("equipment/addEquipment", payload);
+        const { msg } = await axiosInstance.post(
+          "equipment/addEquipment",
+          payload
+        );
         if (msg) {
           dispatch("fetchEquipments");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async updateEquipment({ dispatch }, payload) {
       try {
-        const { msg } = await axiosInstance.patch(`equipment/update/${payload.id}`, payload);
+        const { msg } = await axiosInstance.patch(
+          `equipment/update/${payload.id}`,
+          payload
+        );
         if (msg) {
           dispatch("fetchEquipments");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async deleteEquipment({ dispatch }, id) {
@@ -210,10 +266,16 @@ export default createStore({
         const { msg } = await axiosInstance.delete(`equipment/delete/${id}`);
         if (msg) {
           dispatch("fetchEquipments");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async fetchSupplements({ commit }) {
@@ -225,7 +287,10 @@ export default createStore({
           toast.error(msg, { autoClose: 3000 });
         }
       } catch (error) {
-        toast.error(error.message, { autoClose: 3000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async fetchSupplement({ commit }, id) {
@@ -234,32 +299,56 @@ export default createStore({
         if (data) {
           commit("setSupplement", data.result || data);
         } else {
-          toast.error(msg, { autoClose: 3000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.error(msg, {
+            autoClose: 3000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (error) {
-        toast.error(error.message, { autoClose: 3000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async addSupplement({ dispatch }, payload) {
       try {
-        const { msg } = await axiosInstance.post("supplements/addSupplement", payload);
+        const { msg } = await axiosInstance.post(
+          "supplements/addSupplement",
+          payload
+        );
         if (msg) {
           dispatch("fetchSupplements");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async updateSupplement({ dispatch }, payload) {
       try {
-        const { msg } = await axiosInstance.patch(`supplements/update/${payload.id}`, payload);
+        const { msg } = await axiosInstance.patch(
+          `supplements/update/${payload.id}`,
+          payload
+        );
         if (msg) {
           dispatch("fetchSupplements");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     async deleteSupplement({ dispatch }, id) {
@@ -267,10 +356,16 @@ export default createStore({
         const { msg } = await axiosInstance.delete(`supplements/delete/${id}`);
         if (msg) {
           dispatch("fetchSupplements");
-          toast.success(msg, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       } catch (e) {
-        toast.error(e.message, { autoClose: 2000, position: toast.POSITION.BOTTOM_CENTER });
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
   },
