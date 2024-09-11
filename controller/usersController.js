@@ -1,5 +1,6 @@
 import { getUsersDb, getUserDb, insertUserDb, deleteUserDb, updateUserDb, loginUserDb } from '../model/usersDB.js';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
+import jwt from "jsonwebtoken";
 
 const fetchUsers = async (req, res) => {
     res.json(await getUsersDb());
@@ -64,23 +65,37 @@ const updateUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-    const token = req.body.token;
-    res.json({ message: "Login successful", token });
-};
+    const { email, password } = req.body;
 
-const getCurrentUser = async (req, res) => {
     try {
-        const email = req.user.email; 
         const user = await loginUserDb(email);
-
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).send('User not found');
+        if (!user) {
+            return res.status(401).json({ msg: "User not found" });
         }
+
+        const isPasswordMatch = await compare(password, user.password); 
+        if (!isPasswordMatch) {
+            return res.status(401).json({ msg: "Invalid password" });
+        }
+
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, {
+            expiresIn: "7d",
+        });
+
+        res.status(200).json({
+            msg: "Login successful",
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                surname: user.surname,
+                role: user.role,
+            }
+        });
     } catch (error) {
-        res.status(500).send('An error occurred while fetching the user');
+        res.status(500).json({ msg: "Login failed", error: error.message });
     }
 };
 
-export { fetchUsers, fetchUser, insertUser, deleteUser, updateUser, loginUser, getCurrentUser };
+export { fetchUsers, fetchUser, insertUser, deleteUser, updateUser, loginUser };
