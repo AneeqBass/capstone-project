@@ -1,6 +1,7 @@
 import express from 'express'
-import equipmentRouter from './routers/equipment.js'
-import supplementsRouter from './routers/supplements.js'
+import orderItemsRouter from './routers/orderItems.js'
+import ordersRouter from './routers/orders.js'
+import stocksRouter from './routers/stocks.js'
 import usersRouter from './routers/users.js'
 import cors from 'cors'
 let port = process.env.PORT || 5001
@@ -21,8 +22,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/equipment', equipmentRouter)
-app.use('/supplements', supplementsRouter)
+app.use('/orderItems', orderItemsRouter)
+app.use('/orders', ordersRouter)
+app.use('/stocks', stocksRouter)
 app.use('/users', usersRouter)
 
 
