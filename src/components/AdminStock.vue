@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-      <h5>Supplements</h5>
-      <input v-model="searchQuery" placeholder="Search Supplements..." class="form-control mb-3" />
-      <div class="table-responsive" v-if="filteredSupplements.length">
-        <table class="table table-supplements">
+      <h5>Stocks</h5>
+      <input v-model="searchQuery" placeholder="Search Stocks..." class="form-control mb-3" />
+      <div class="table-responsive" v-if="filteredStocks.length">
+        <table class="table table-stocks">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -16,19 +16,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="supplement in filteredSupplements" :key="supplement.id">
-              <td>{{ supplement.id }}</td>
-              <td>{{ supplement.name }}</td>
-              <td class="d-none d-sm-table-cell">{{ supplement.category }}</td>
-              <td class="d-none d-md-table-cell">{{ supplement.quantity }}</td>
-              <td class="d-none d-md-table-cell">R{{ supplement.price }}</td>
+            <tr v-for="stock in filteredStocks" :key="stock.id">
+              <td>{{ stock.id }}</td>
+              <td>{{ stock.name }}</td>
+              <td class="d-none d-sm-table-cell">{{ stock.category }}</td>
+              <td class="d-none d-md-table-cell">{{ stock.quantity }}</td>
+              <td class="d-none d-md-table-cell">R{{ stock.price }}</td>
               <td>
-                <router-link :to="{ name: 'supplementEdit', params: { id: supplement.id } }">
+                <router-link :to="{ name: 'stockEdit', params: { id: stock.id } }">
                   <button class="btn btn-sm"><i class="bi bi-pencil-square"></i></button>
                 </router-link>
               </td>
               <td>
-                <button class="btn btn-sm" @click="deleteSupplement(supplement.id)"><i
+                <button class="btn btn-sm" @click="deleteStock(stock.id)"><i
                     class="bi bi-trash-fill"></i></button>
               </td>
             </tr>
@@ -37,11 +37,11 @@
       </div>
       <div v-else>
         <Spinner v-if="loading" />
-        <p v-else>No supplements found.</p>
+        <p v-else>No stocks found.</p>
       </div>
       <div class="d-flex justify-content-center align-items-center">
-        <p class="my-auto">Add Supplement</p>
-        <router-link :to="{ name: 'supplementAdd' }">
+        <p class="my-auto">Add Stock</p>
+        <router-link :to="{ name: 'stockAdd' }">
           <i class="bi-plus-square-fill mx-2"></i>
         </router-link>
       </div>
@@ -61,35 +61,35 @@
       };
     },
     computed: {
-      supplements() {
-        return this.$store.state.supplements || [];  
+      stocks() {
+        return this.$store.state.stocks || [];  
       },
-      filteredSupplements() {
-        return this.supplements.filter(supplement =>
-          supplement.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      filteredStocks() {
+        return this.stocks.filter(stock =>
+          stock.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       },
     },
     methods: {
-      fetchSupplements() {
+      fetchStocks() {
         this.loading = true;
-        this.$store.dispatch('fetchSupplements')
+        this.$store.dispatch('fetchStocks')
           .then(() => {
             this.loading = false;
           })
           .catch(err => {
-            this.error = 'Failed to fetch supplements.';
+            this.error = 'Failed to fetch stocks.';
             console.error(err);
           });
       },
-      deleteSupplement(id) {
-        if (confirm('Are you sure you want to delete this supplement?')) {
-          this.$store.dispatch('deleteSupplement', id)
+      deleteStock(id) {
+        if (confirm('Are you sure you want to delete this stock?')) {
+          this.$store.dispatch('deleteStock', id)
             .then(() => {
-              this.fetchSupplements();
+              this.fetchStocks();
             })
             .catch(err => {
-              console.error('Failed to delete supplement:', err);
+              console.error('Failed to delete stock:', err);
             });
         }
       }
@@ -98,7 +98,7 @@
       Spinner,
     },
     mounted() {
-      this.fetchSupplements();
+      this.fetchStocks();
     }
   };
   </script>
@@ -108,16 +108,16 @@
     max-width: 100%;
   }
   
-  .table-supplements th,
-  .table-supplements td {
+  .table-stocks th,
+  .table-stocks td {
     white-space: nowrap;
     vertical-align: middle;
   }
   
   @media (max-width: 575px) {
   
-    .table-supplements th,
-    .table-supplements td {
+    .table-stocks th,
+    .table-stocks td {
       font-size: 0.8rem;
     }
   }

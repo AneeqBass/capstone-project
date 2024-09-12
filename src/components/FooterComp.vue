@@ -14,13 +14,9 @@
               active-class="active-link">
               <li>ABOUT</li>
             </router-link>
-            <router-link class="link-offset-2 link-underline link-underline-opacity-0" to="/equipment"
+            <router-link class="link-offset-2 link-underline link-underline-opacity-0" to="/stocks"
               active-class="active-link">
-              <li>EQUIPMENT</li>
-            </router-link>
-            <router-link class="link-offset-2 link-underline link-underline-opacity-0" to="/supplements"
-              active-class="active-link">
-              <li>SUPPLEMENTS</li>
+              <li>STOCKS</li>
             </router-link>
             <router-link class="link-offset-2 link-underline link-underline-opacity-0" to="/admin"
               active-class="active-link">

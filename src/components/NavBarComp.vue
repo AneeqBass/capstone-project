@@ -19,10 +19,7 @@
               <router-link to="/about" class="nav-link">About</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/equipment" class="nav-link">Equipment</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/supplements" class="nav-link">Supplements</router-link>
+              <router-link to="/stocks" class="nav-link">Stock</router-link>
             </li>
             <li class="nav-item">
               <router-link to="/admin" class="nav-link">Admin</router-link>
@@ -80,8 +77,9 @@ export default {
   methods: {
     getUserFromCookies() {
       const { cookies } = useCookies();
+      const authToken = cookies.get('authToken')
       const currentUser = cookies.get("user"); // Retrieve the currentUser from the cookies
-      if (currentUser) {
+      if (currentUser && authToken) {
         this.currentUser = currentUser; // Set the currentUser data in the component state
       } else {
         this.currentUser = { name: "Guest" }; // Default to guest if no currentUser data is found
