@@ -7,14 +7,18 @@
           <h6 class="text-start">Streamlining Your Fitness, One Rep at a Time</h6>
           <div class="row gx-5">
             <div class="col">
-              <router-link to="/equipment"><button type="button" class="btn btn-lg w-100 mb-2">
-                  Equipment
-                </button></router-link>
+              <router-link to="/stocks">
+                <button type="button" class="btn btn-lg w-100 mb-2">
+                  Stocks
+                </button>
+              </router-link>
             </div>
             <div class="col">
-              <router-link to="/supplements"><button type="button" class="btn btn-lg w-100">
-                  Supplements
-                </button></router-link>
+              <router-link to="/about">
+                <button type="button" class="btn btn-lg w-100">
+                  About
+                </button>
+              </router-link>
             </div>
           </div>
         </div>
@@ -37,54 +41,24 @@
           </div>
         </div>
       </div>
-      <h1 class="text-start">/Equipment</h1>
-      <div v-if="equipments">
+      <h1 class="text-start">/Stock</h1>
+      <div v-if="stocks">
         <div data-aos="fade-left" class="accordion accordion-flush" id="accordionExample">
           <div class="accordion-item bg-transparent with-blur-backdrop border-2 accMarg ">
             <div id="collapseOne" class="accordion-collapse collapse show " data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 <div class="card-group card-group-scroll m-auto">
-                  <div v-for="equipment in equipments()" id="cardBlockWidth"
-                    class="card bg-transparent with-blur-backdrop border border-0" :key="equipment.id">
+                  <div v-for="stock in stocks()" id="cardBlockWidth"
+                    class="card bg-transparent with-blur-backdrop border border-0" :key="stock.id">
                     <div class="container-fluid">
-                      <img id="imgSize" :src="equipment.imgUrl" class="img-fluid" alt="image" />
+                      <img id="imgSize" :src="stock.imgUrl" class="img-fluid" alt="image" />
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">{{ equipment.name }}</h5>
-                      <h5 class="card-title">{{ equipment.quantity }}</h5>
+                      <h5 class="card-title">{{ stock.name }}</h5>
+                      <h5 class="card-title">{{ stock.quantity }}</h5>
                       <p class="lead">
                         <span class="text-success">Price</span>:
-                        R{{ equipment.price }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <Spinner />
-      </div>
-      <h1 class="text-start">/Supplement</h1>
-      <div v-if="supplements">
-        <div data-aos="fade-left" class="accordion accordion-flush" id="accordionExample">
-          <div class="accordion-item bg-transparent with-blur-backdrop border-2 accMarg ">
-            <div id="collapseOne" class="accordion-collapse collapse show " data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="card-group card-group-scroll m-auto">
-                  <div v-for="supplement in supplements()" id="cardBlockWidth"
-                    class="card bg-transparent with-blur-backdrop border border-0" :key="supplement.id">
-                    <div class="container-fluid">
-                      <img id="imgSize" :src="supplement.imgUrl" class="img-fluid" alt="image" />
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">{{ supplement.name }}</h5>
-                      <h5 class="card-title">{{ supplement.quantity }}</h5>
-                      <p class="lead">
-                        <span class="text-success">Price</span>:
-                        R{{ supplement.price }}
+                        R{{ stock.price }}
                       </p>
                     </div>
                   </div>
@@ -106,19 +80,13 @@ import Spinner from "@/components/SpinnerComp.vue";
 
 export default {
   methods: {
-    getEquipments() {
-      this.$store.dispatch("fetchEquipments");
+    getStocks() {
+      this.$store.dispatch("fetchStocks");
     },
-    equipments() {
-      return this.$store.state.equipments;
+    stocks() {
+      return this.$store.state.stocks;
     },
-    getSupplements() {
-      this.$store.dispatch("fetchSupplements");
-    },
-    supplements() {
-      return this.$store.state.supplements;
-    },
-    
+
   },
   components: {
     Spinner,
@@ -135,9 +103,7 @@ export default {
       // Remove flag after reloading
       localStorage.removeItem('reloaded');
 
-      // Fetch data after the reload
-      this.getEquipments();
-      this.getSupplements();
+      this.getStocks();
     }
   },
 };

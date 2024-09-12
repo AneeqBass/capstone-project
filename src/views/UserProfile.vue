@@ -84,8 +84,9 @@ export default {
     methods: {
         getUserFromCookies() {
       const { cookies } = useCookies();
+      const authToken = cookies.get("authToken"); // Retrieve the currentUser from the cookies
       const currentUser = cookies.get("user"); // Retrieve the currentUser from the cookies
-      if (currentUser) {
+      if (currentUser && authToken) {
         this.currentUser = currentUser; // Set the currentUser data in the component state
       } else {
         this.currentUser = { name: "Guest" }; // Default to guest if no currentUser data is found

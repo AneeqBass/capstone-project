@@ -23,33 +23,27 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    path: '/equipment',
-    name: 'equipment',
-    component: () => import(/* webpackChunkName: "equipment" */ '../views/EquipmentView.vue'),
+    path: '/stocks',
+    name: 'stocks',
+    component: () => import(/* webpackChunkName: "stocks" */ '../views/StocksView.vue'),
     meta: { requiresAuth: false }
   },
   {
-    path: '/supplements',
-    name: 'supplements',
-    component: () => import(/* webpackChunkName: "supplements" */ '../views/StocksView.vue'),
+    path: '/stockDetail/:id',
+    name: 'stockDetail',
+    component: () => import(/* webpackChunkName: "stockDetail" */ '../views/StockDetailView.vue'),
     meta: { requiresAuth: false }
   },
   {
-    path: '/supplementDetail/:id',
-    name: 'supplementDetail',
-    component: () => import(/* webpackChunkName: "supplementDetail" */ '../views/SupplementDetailView.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    path: '/supplementAdd/',
-    name: 'supplementAdd',
-    component: () => import(/* webpackChunkName: "supplementAdd" */ '../views/SupplementAddView.vue'),
+    path: '/stockAdd/',
+    name: 'stockAdd',
+    component: () => import(/* webpackChunkName: "stockAdd" */ '../views/StockAddView.vue'),
     meta: { requiresAuth: true, role: 'ADMIN' }
   },
   {
-    path: '/supplementEdit/:id',
-    name: 'supplementEdit',
-    component: () => import(/* webpackChunkName: "supplementEdit" */ '../views/SupplementEditView.vue'),
+    path: '/stockEdit/:id',
+    name: 'stockEdit',
+    component: () => import(/* webpackChunkName: "stockEdit" */ '../views/StockEditView.vue'),
     meta: { requiresAuth: true, role: 'ADMIN' }
   },
   {
@@ -98,11 +92,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const { cookies } = useCookies();
+  const authToken = cookies.get('authToken')
   const currentUser = cookies.get('user');
   const role = currentUser ? currentUser.role : 'USER';
 
   if (to.meta.requiresAuth) {
-    if (!currentUser) {
+    if (!authToken) {
       next({ name: 'login' });
       toast.error('Please login to access this page.', {
         autoClose: 3000,

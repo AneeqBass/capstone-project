@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters.user;  // Accessing the getter directly
+      return this.$store.getters.user;
     },
   },
   methods: {

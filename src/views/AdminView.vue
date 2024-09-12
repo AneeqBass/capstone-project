@@ -1,23 +1,20 @@
 <template>
   <div class="container admin">
     <h1 class="mb-2 text-start">/Admin</h1>
-    <AdminEquipment />
-    <AdminSupplement />
+    <AdminStock />
     <AdminUsers />
   </div>
 </template>
 
 <script>
-import AdminEquipment from '@/components/AdminEquipment.vue';
-import AdminSupplement from '@/components/AdminSupplement.vue';
+import AdminStock from '@/components/AdminStock.vue';
 import AdminUsers from '@/components/AdminUsers.vue';
 
 export default {
   components: {
-    AdminEquipment,
     AdminUsers,
-    AdminSupplement
-  },
+    AdminStock
+  }
 };
 </script>
 

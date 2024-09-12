@@ -8,7 +8,7 @@ import { useCookies } from 'vue3-cookies';
 export default createStore({
   state: {
     users: null,
-    user: null, // Current user details
+    user: null, 
     stocks: null,
     stock: null,
   },
@@ -21,7 +21,6 @@ export default createStore({
     },
     setCurrentUser(state, user) {
       state.currentUser = user;
-      console.log("user =" + user);
     },
     setStocks(state, payload) {
       state.stocks = payload;
@@ -43,7 +42,7 @@ export default createStore({
         if (data) {
           commit("setUser", data.user || data);
           cookies.set("authToken", data.token || data, { expires: "7d" });
-          cookies.set("user", data.user || data);
+          cookies.set("user", data.user || data, { expires: "7d" });
           router.push({ name: "home" });
           toast.success("Login successful!", {
             autoClose: 2000,
