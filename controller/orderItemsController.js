@@ -4,9 +4,11 @@ const getOrderItems = async(req,res)=>{
     res.json(await getOrderItemsDb(req.params.id))
 }
 
-const getOrderItem = async(req,res)=>{
-    res.json(await getOrderItemDb(req.params.id))
-}
+const getOrderItem = async (req, res) => {
+    let { stockId } = req.body; 
+    let orderId = req.params.id;
+        res.json(await getOrderItemDb(orderId, stockId));  
+};
 
 const placeOrderItem = async (req, res) => {
     try {

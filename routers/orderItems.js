@@ -1,9 +1,9 @@
 import express from 'express'
-import {getOrderItems,placeOrderItem,deleteOrderItem,updateOrderItem} from '../controller/orderItemsController.js'
+import {getOrderItems, getOrderItem, placeOrderItem,deleteOrderItem,updateOrderItem} from '../controller/orderItemsController.js'
 
 const router = express.Router()
 
-router.get('/:id', getOrderItems)
+router.post('/stock/:id', getOrderItem)
 
 router.get('orderItem/:id', getOrderItems)
 

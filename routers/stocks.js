@@ -7,7 +7,7 @@ router.get('/', fetchStocks)
 
 router.get('/:id', fetchStock)
 
-router.get('orderItems/:id', getStocksFromOrderId)
+router.post('/orderItems/:id', getStocksFromOrderId)
 
 router.post('/addStock', insertStock)
 

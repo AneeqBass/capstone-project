@@ -5,8 +5,11 @@ const fetchStocks = async (req, res) => {
 }
 
 const getStocksFromOrderId = async (req, res) => {
-    res.json(await getStocksFromOrderIdDb(req.params.id))
-}
+    let { stockId } = req.body; 
+    let orderId = req.params.id;
+        res.json(await getStocksFromOrderIdDb(orderId, stockId));  
+};
+
 
 const fetchStock = async (req, res) => {
     res.json(await getStockDb(req.params.id))
