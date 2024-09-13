@@ -22,7 +22,7 @@ const insertStock = async (req, res) => {
 
         res.status(200).send('Stock was added successfully');
     } catch (error) {
-        res.status(404).send('An error occurred while adding the stock');
+        res.status(404).send('An error occurred while adding the stock' + error);
     }
 };
 

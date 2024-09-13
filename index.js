@@ -1,6 +1,7 @@
 import express from 'express'
 import orderItemsRouter from './routers/orderItems.js'
 import ordersRouter from './routers/orders.js'
+import reportsRouter from './routers/reports.js'
 import stocksRouter from './routers/stocks.js'
 import usersRouter from './routers/users.js'
 import cors from 'cors'
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 app.use('/orderItems', orderItemsRouter)
 app.use('/orders', ordersRouter)
+app.use('/reports', reportsRouter)
 app.use('/stocks', stocksRouter)
 app.use('/users', usersRouter)
 
