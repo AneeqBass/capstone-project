@@ -13,19 +13,19 @@ const pool = createPool({
 const getOrderItemsDb = async (id) => {
     let [data] = await pool.query('SELECT * FROM orderItems where orderId = ?', [id])
     return data;
-}
+} 
 
-const getOrderItemDb = async (orderId, stockId) => {
+const getOrderItemDb = async (orderId, stockId) => { 
     let [data] = await pool.query(`
-        SELECT *
-        FROM orderItems
-        WHERE orderId = ? AND stockId = ?
-        `, [orderId, stockId])
+        SELECT * 
+        FROM orderItems 
+        WHERE orderId = ? AND stockId = ?  
+        `, [orderId, stockId])  
     return data;
 };
 
 const placeOrderItemDb = async (orderId, stockId, quantity, price, priceTotal) => {
-    await pool.query(`
+    await pool.query(` 
         INSERT INTO orderItems (orderId, stockId, quantity, price, priceTotal)
         VALUES (?, ?, ?, ?, ?)
         `,
