@@ -1,6 +1,7 @@
 <template>
   <div class="container admin">
     <h1 class="mb-2 text-start">/Admin</h1>
+    <AdminOrders />
     <AdminStock />
     <AdminUsers />
   </div>
@@ -9,11 +10,13 @@
 <script>
 import AdminStock from '@/components/AdminStock.vue';
 import AdminUsers from '@/components/AdminUsers.vue';
+import AdminOrders from '@/components/AdminOrders.vue';
 
 export default {
   components: {
     AdminUsers,
-    AdminStock
+    AdminStock,
+    AdminOrders
   }
 };
 </script>

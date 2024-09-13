@@ -8,10 +8,10 @@
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col" class="d-none d-sm-table-cell">Surname</th>
-            <th scope="col" class="d-none d-md-table-cell">Gender</th>
-            <th scope="col" class="d-none d-lg-table-cell">Email</th>
-            <th scope="col" class="d-none d-lg-table-cell">Role</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
           </tr>
@@ -20,10 +20,10 @@
           <tr v-for="user in filteredUsers" :key="user.id">
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
-            <td class="d-none d-sm-table-cell">{{ user.surname }}</td>
-            <td class="d-none d-md-table-cell">{{ user.gender }}</td>
-            <td class="d-none d-lg-table-cell">{{ user.email }}</td>
-            <td class="d-none d-lg-table-cell">{{ user.role }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
             <td>
               <router-link :to="{ name: 'userEdit', params: { id: user.id } }">
                   <button class="btn btn-sm"><i class="bi bi-pencil-square"></i></button>

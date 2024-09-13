@@ -8,9 +8,9 @@
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Name</th>
-              <th scope="col" class="d-none d-sm-table-cell">Category</th>
-              <th scope="col" class="d-none d-md-table-cell">Quantity</th>
-              <th scope="col" class="d-none d-md-table-cell">Price</th>
+              <th scope="col">Category</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
             </tr>
@@ -19,9 +19,9 @@
             <tr v-for="stock in filteredStocks" :key="stock.id">
               <td>{{ stock.id }}</td>
               <td>{{ stock.name }}</td>
-              <td class="d-none d-sm-table-cell">{{ stock.category }}</td>
-              <td class="d-none d-md-table-cell">{{ stock.quantity }}</td>
-              <td class="d-none d-md-table-cell">R{{ stock.price }}</td>
+              <td>{{ stock.category }}</td>
+              <td>{{ stock.quantity }}</td>
+              <td>R{{ stock.price }}</td>
               <td>
                 <router-link :to="{ name: 'stockEdit', params: { id: stock.id } }">
                   <button class="btn btn-sm"><i class="bi bi-pencil-square"></i></button>
