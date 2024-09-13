@@ -22,10 +22,6 @@
               active-class="active-link">
               <li>ADMIN</li>
             </router-link>
-            <router-link class="link-offset-2 link-underline link-underline-opacity-0" to="/contact"
-              active-class="active-link">
-              <li>CONTACT</li>
-            </router-link>
           </div>
         </div>
         <div class="col">

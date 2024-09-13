@@ -22,10 +22,7 @@
               <router-link to="/stocks" class="nav-link">Stock</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/admin" class="nav-link">Admin</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/contact" class="nav-link">Contact</router-link>
+              <router-link to="/report" class="nav-link">Report</router-link>
             </li>
           </ul>
 
@@ -100,10 +97,11 @@ export default {
 .navbar {
   background-color: transparent !important;
   backdrop-filter: blur(10px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
 }
 
 .navbar .nav-link {
-  color: white;
+  color: #333333; /* Changed to dark text for contrast on white */
   transition: color 0.3s ease-in-out;
 }
 
@@ -120,10 +118,12 @@ export default {
   height: 100px;
   padding-left: 10px;
   padding-top: 10px;
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(1px 1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(1px 1px 0 black);
 }
 
 .navbar-toggler-icon {
-  background-color: white;
+  background-color: white; /* Changed to dark for visibility */
 }
 
 .profile-img {
@@ -133,15 +133,17 @@ export default {
 }
 
 .dropdown-menu {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #ffffff; /* Changed to white */
+  color: #333333; /* Ensure text is readable */
 }
 
 .dropdown-item {
-  color: #333;
+  color: #333333;
 }
 
 .dropdown-item:hover {
   background-color: #e21861;
   color: white;
 }
+
 </style>

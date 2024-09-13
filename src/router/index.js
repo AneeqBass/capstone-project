@@ -17,12 +17,6 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    path: '/contact',
-    name: 'contact',
-    component: () => import(/* webpackChunkName: "contact" */ '../views/ContactView.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
     path: '/stocks',
     name: 'stocks',
     component: () => import(/* webpackChunkName: "stocks" */ '../views/StocksView.vue'),
@@ -47,6 +41,24 @@ const routes = [
     meta: { requiresAuth: true, role: 'ADMIN' }
   },
   {
+    path: '/checkout/:id',
+    name: 'checkout',
+    component: () => import(/* webpackChunkName: "checkout" */ '../views/CheckoutView.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/orderDetail/:id',
+    name: 'orderDetail',
+    component: () => import(/* webpackChunkName: "orderDetail" */ '../views/OrderDetailsView.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/orderEdit/:id',
+    name: 'orderEdit',
+    component: () => import(/* webpackChunkName: "orderEdit" */ '../views/OrderEditView.vue'),
+    meta: { requiresAuth: true, role: 'ADMIN' }
+  },
+  {
     path: '/register/',
     name: 'userAdd',
     component: () => import(/* webpackChunkName: "userAdd" */ '../views/UserRegisterView.vue'),
@@ -67,7 +79,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "admin" */ '../views/AdminView.vue'),
+    component: () => import(/* webpackChunkName: "admin" */ '../views/ReportView.vue'),
     meta: { requiresAuth: true, role: 'ADMIN' }
   },
   {
@@ -80,7 +92,7 @@ const routes = [
     path: '/report',
     name: 'report',
     component: () => import(/* webpackChunkName: "report" */ '../views/ReportView.vue'),
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: true, role: 'ADMIN' }
   }
 ]
 

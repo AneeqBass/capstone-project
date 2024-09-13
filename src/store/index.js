@@ -8,9 +8,13 @@ import { useCookies } from 'vue3-cookies';
 export default createStore({
   state: {
     users: null,
-    user: null, 
+    user: null,
     stocks: null,
     stock: null,
+    orders: null,
+    order: null,
+    orderItems: null,
+    orderItem: null
   },
   mutations: {
     setUsers(state, payload) {
@@ -28,6 +32,18 @@ export default createStore({
     setStock(state, payload) {
       state.stock = payload;
     },
+    setOrders(state, payload) {
+      state.orders = payload;
+    },
+    setOrder(state, payload) {
+      state.order = payload;
+    },
+    setOrderItems(state, payload) {
+      state.orderItems = payload;
+    },
+    setOrderItem(state, payload) {
+      state.orderItem = payload;
+    },
     clearUser(state) {
       state.user = null;
     }
@@ -38,7 +54,7 @@ export default createStore({
       try {
         const { data } = await axiosInstance.post(`users/login`, payload);
         console.log(data);
-        
+
         if (data) {
           commit("setUser", data.user || data);
           cookies.set("authToken", data.token || data, { expires: "7d" });
@@ -194,6 +210,26 @@ export default createStore({
         });
       }
     },
+    async fetchStockFromOrderId({ commit }, payload) {
+      try {
+        const { data } = await axiosInstance.post(`stocks/orderItems/${payload.orderId}`, payload.stockId);
+
+        if (data) {
+          commit("setStock", data.result || data);
+        } else {
+          toast.error(data.msg || 'Error fetching stocks', {
+            autoClose: 3000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (error) {
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+
     async fetchStock({ commit }, id) {
       try {
         const { data, msg } = await axiosInstance.get(`stocks/${id}`);
@@ -257,6 +293,187 @@ export default createStore({
         const { msg } = await axiosInstance.delete(`stocks/delete/${id}`);
         if (msg) {
           dispatch("fetchStocks");
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async fetchOrderItems({ commit }, id) {
+      try {
+        const { data, msg } = await axiosInstance.get(`orderItems/${id}`);
+        if (data) {
+          commit("setOrderItems", data.results || data);
+        } else {
+          toast.error(msg, { autoClose: 3000 });
+        }
+      } catch (error) {
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async fetchOrderItem({ commit }, payload) {
+      try {
+        const { data } = await axiosInstance.post(`orderItems/stock/${payload.orderId}`, payload.stockId);
+
+        if (data) {
+          commit("setOrderItem", data.result || data);
+        } else {
+          toast.error(data.msg || 'Error fetching stocks', {
+            autoClose: 3000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (error) {
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async addOrderItem({ dispatch }, payload) {
+      try {
+        const { msg } = await axiosInstance.post(
+          "orderItems/addOrderItem",
+          payload
+        );
+        if (msg) {
+          dispatch("fetchOrderItems");
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async updateOrderItem({ dispatch }, payload) {
+      try {
+        const { msg } = await axiosInstance.patch(
+          `orderItems/update/${payload.id}`,
+          payload
+        );
+        if (msg) {
+          dispatch("fetchOrderItems");
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async deleteOrderItem({ dispatch }, id) {
+      try {
+        const { msg } = await axiosInstance.delete(`orderItems/delete/${id}`);
+        if (msg) {
+          dispatch("fetchOrderItems");
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async fetchOrders({ commit }) {
+      try {
+        const { data, msg } = await axiosInstance.get("orders");
+        if (data) {
+          commit("setOrders", data.results || data);
+        } else {
+          toast.error(msg, { autoClose: 3000 });
+        }
+      } catch (error) {
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async fetchOrder({ commit }, id) {
+      try {
+        const { data, msg } = await axiosInstance.get(`orders/${id}`);
+        if (data) {
+          commit("setOrder", data.result || data);
+        } else {
+          toast.error(msg, {
+            autoClose: 3000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (error) {
+        toast.error(error.message, {
+          autoClose: 3000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async addOrder({ dispatch }, payload) {
+      try {
+        const { msg } = await axiosInstance.post(
+          "orders/addOrder",
+          payload
+        );
+        if (msg) {
+          dispatch("fetchOrders");
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async updateOrder({ dispatch }, payload) {
+      try {
+        const { msg } = await axiosInstance.patch(
+          `orders/update/${payload.id}`,
+          payload
+        );
+        if (msg) {
+          dispatch("fetchOrders");
+          toast.success(msg, {
+            autoClose: 2000,
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      } catch (e) {
+        toast.error(e.message, {
+          autoClose: 2000,
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    },
+    async deleteOrder({ dispatch }, id) {
+      try {
+        const { msg } = await axiosInstance.delete(`orders/delete/${id}`);
+        if (msg) {
+          dispatch("fetchOrders");
           toast.success(msg, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER,

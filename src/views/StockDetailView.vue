@@ -3,7 +3,6 @@
         <div class="singleStock">
             <div class="row justify-content-center" v-if="stock">
                 <div>
-                    {{ stock.imgUrl }}
                     <img :src="stock.imgUrl" loading="lazy" class="img-fluid prodImg" :alt="stock.name">
                 </div>
                 <div>
