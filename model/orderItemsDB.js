@@ -10,8 +10,8 @@ const pool =createPool({
     password: process.env.PASSWORD
 })
 
-const getOrderItemsDb = async()=>{
-    let [data] = await pool.query('SELECT * FROM orderItems')
+const getOrderItemsDb = async (id) =>{
+    let [data] = await pool.query('SELECT * FROM orderItems where orderId = ?', [id])
     return data;
 }
 
@@ -19,7 +19,6 @@ const getOrderItemDb = async (id) =>{
     let [[data]] = await pool.query('SELECT * FROM orderItems WHERE id = ?', [id])
     return data;
 }
-
 
 const placeOrderItemDb = async(orderId, stockId, quantity, price, priceTotal) =>{
     await pool.query(`

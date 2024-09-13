@@ -15,7 +15,10 @@ const getStocksDb = async()=>{
     return data;
 }
 
-
+const getStocksFromOrderIdDb = async (id) => {
+    let [data] = await pool.query("SELECT s.* FROM stocks s INNER JOIN orderItems oI ON s.id = oI.stockId WHERE oI.orderId = ?", [id])
+    return [data];
+};
 
 const getStockDb = async (id) =>{
     let [[data]] = await pool.query('SELECT * FROM stocks WHERE id = ?', [id])
@@ -50,4 +53,4 @@ const updateStockDb = async(name, description, category, price, quantity, imgUrl
         [name, description, category, price, quantity, imgUrl, id])
 }
 
-export {getStocksDb, getStockDb, insertStockDb, deleteStockDb, updateStockDb}
+export {getStocksDb, getStocksFromOrderIdDb, getStockDb, insertStockDb, deleteStockDb, updateStockDb}

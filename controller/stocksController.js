@@ -1,11 +1,14 @@
-import {getStocksDb, getStockDb, insertStockDb, deleteStockDb, updateStockDb} from '../model/stocksDB.js'
+import { getStocksDb, getStocksFromOrderIdDb, getStockDb, insertStockDb, deleteStockDb, updateStockDb } from '../model/stocksDB.js'
 
-const fetchStocks = async(req,res) =>{
+const fetchStocks = async (req, res) => {
     res.json(await getStocksDb())
 }
 
+const getStocksFromOrderId = async (req, res) => {
+    res.json(await getStocksFromOrderIdDb(req.params.id))
+}
 
-const fetchStock = async(req,res)=>{
+const fetchStock = async (req, res) => {
     res.json(await getStockDb(req.params.id))
 }
 
@@ -35,12 +38,12 @@ const updateStock = async (req, res) => {
         let { name, description, category, price, quantity, imgUrl } = req.body;
         let stock = await getStockDb(req.params.id);
 
-        name?name=name:name = stock.name
-        description?description=description:description = stock.description
-        category?category=category:category = stock.category
-        price?price=price:price = stock.price
-        quantity?quantity=quantity:quantity = stock.quantity
-        imgUrl?imgUrl=imgUrl:imgUrl = stock.imgUrl
+        name ? name = name : name = stock.name
+        description ? description = description : description = stock.description
+        category ? category = category : category = stock.category
+        price ? price = price : price = stock.price
+        quantity ? quantity = quantity : quantity = stock.quantity
+        imgUrl ? imgUrl = imgUrl : imgUrl = stock.imgUrl
 
         await updateStockDb(name, description, category, price, quantity, imgUrl, req.params.id);
         res.status(200).send('Stock was updated successfully');
@@ -50,4 +53,4 @@ const updateStock = async (req, res) => {
     }
 };
 
-export{fetchStocks,fetchStock,insertStock,deleteStock,updateStock}
+export { fetchStocks, getStocksFromOrderId, fetchStock, insertStock, deleteStock, updateStock }

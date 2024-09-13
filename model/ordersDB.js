@@ -15,13 +15,10 @@ const getOrdersDb = async()=>{
     return data;
 }
 
-
-
 const getOrderDb = async (id) =>{
     let [[data]] = await pool.query('SELECT * FROM orders WHERE id = ?', [id])
     return data;
 }
-
 
 const placeOrderDb = async(userId, date, priceTotal) =>{
     await pool.query(`

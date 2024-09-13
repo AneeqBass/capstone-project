@@ -1,10 +1,10 @@
-import {getOrdersDb, getOrderDb, placeOrderDb, deleteOrderDb, updateOrderDb} from '../model/ordersDB.js'
+import { getOrdersDb, getOrderDb, placeOrderDb, deleteOrderDb, updateOrderDb } from '../model/ordersDB.js'
 
-const fetchOrders = async(req,res) =>{
+const fetchOrders = async (req, res) => {
     res.json(await getOrdersDb())
 }
 
-const fetchOrder = async(req,res)=>{
+const fetchOrder = async (req, res) => {
     res.json(await getOrderDb(req.params.id))
 }
 
@@ -33,7 +33,7 @@ const updateOrder = async (req, res) => {
         let { priceTotal } = req.body;
         let order = await getOrderDb(req.params.id);
 
-        priceTotal?priceTotal=priceTotal:priceTotal = order.priceTotal
+        priceTotal ? priceTotal = priceTotal : priceTotal = order.priceTotal
 
         await updateOrderDb(priceTotal, req.params.id);
         res.status(200).send('Order was updated successfully');
@@ -43,4 +43,4 @@ const updateOrder = async (req, res) => {
     }
 };
 
-export{fetchOrders,fetchOrder,placeOrder,deleteOrder,updateOrder}
+export { fetchOrders, fetchOrder, placeOrder, deleteOrder, updateOrder }

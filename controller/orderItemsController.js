@@ -1,10 +1,10 @@
 import {getOrderItemsDb, getOrderItemDb, placeOrderItemDb, deleteOrderItemDb, updateOrderItemDb} from '../model/orderItemsDB.js'
 
-const fetchOrderItems = async(req,res) =>{
-    res.json(await getOrderItemsDb())
+const getOrderItems = async(req,res)=>{
+    res.json(await getOrderItemsDb(req.params.id))
 }
 
-const fetchOrderItem = async(req,res)=>{
+const getOrderItem = async(req,res)=>{
     res.json(await getOrderItemDb(req.params.id))
 }
 
@@ -44,4 +44,4 @@ const updateOrderItem = async (req, res) => {
     }
 };
 
-export{fetchOrderItems,fetchOrderItem,placeOrderItem,deleteOrderItem,updateOrderItem}
+export{getOrderItems, getOrderItem, placeOrderItem, deleteOrderItem, updateOrderItem}
