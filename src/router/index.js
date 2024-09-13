@@ -92,7 +92,7 @@ const routes = [
     path: '/report',
     name: 'report',
     component: () => import(/* webpackChunkName: "report" */ '../views/ReportView.vue'),
-    meta: { requiresAuth: true, role: 'ADMIN' }
+    meta: { requiresAuth: true }
   }
 ]
 

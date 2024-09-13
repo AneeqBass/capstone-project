@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiURL = "http://localhost:5001/";
+const apiURL = "https://fitquip-capstone.onrender.com/";
 
 const axiosInstance = axios.create({
   baseURL: apiURL,
