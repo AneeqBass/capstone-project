@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="container text-white">
+    <div class="container">
       <div class="row g-3 mb-5">
         <div class="col-md-6 order-md-1 m-auto">
           <h1 class="text-start">/FitQuip</h1>
@@ -113,6 +113,7 @@ export default {
 .home {
   margin-top: 120px;
   width: 100%;
+  background-color: #ffffff; /* Changed to white */
 }
 
 #imgSize {
@@ -130,8 +131,8 @@ export default {
 
 button {
   background-color: transparent;
-  color: white;
-  border: 2px solid black;
+  color: #000000; /* Changed text color to black for better contrast on white */
+  border: 2px solid #000000; /* Changed border color to black */
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
     border-color 0.3s ease-in-out;
 }
@@ -143,7 +144,15 @@ button:hover {
 }
 
 .card-body {
-  color: white;
+  color: #000000; /* Changed text color to black for better contrast on white */
+}
+
+.accordion-item {
+  background-color: #ffffff; /* Added white background */
+}
+
+.accordion-body {
+  color: #000000; /* Changed text color to black for better contrast on white */
 }
 
 @media screen and (max-width: 768px) {
@@ -151,4 +160,5 @@ button:hover {
     margin-top: 140px;
   }
 }
+
 </style>

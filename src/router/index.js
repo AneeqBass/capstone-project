@@ -79,7 +79,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "admin" */ '../views/AdminView.vue'),
+    component: () => import(/* webpackChunkName: "admin" */ '../views/ReportView.vue'),
     meta: { requiresAuth: true, role: 'ADMIN' }
   },
   {
@@ -92,7 +92,7 @@ const routes = [
     path: '/report',
     name: 'report',
     component: () => import(/* webpackChunkName: "report" */ '../views/ReportView.vue'),
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: true, role: 'ADMIN' }
   }
 ]
 

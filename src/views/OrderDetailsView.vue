@@ -191,26 +191,6 @@ export default {
   vertical-align: middle;
 }
 
-.d-none.d-sm-table-cell {
-  display: none;
-}
-
-@media (min-width: 576px) {
-  .d-none.d-sm-table-cell {
-    display: table-cell;
-  }
-}
-
-.d-none.d-md-table-cell {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .d-none.d-md-table-cell {
-    display: table-cell;
-  }
-}
-
 i {
   font-size: 2rem;
   color: #e21861;
@@ -218,6 +198,9 @@ i {
 
 .btn {
   color: #e21861;
+  border: 1px solid #e21861;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .btn-outline-secondary {
@@ -228,5 +211,27 @@ i {
 .btn-outline-secondary:hover {
   background-color: #e21861;
   color: white;
+}
+
+.spinner {
+  display: block;
+  margin: 0 auto;
+  width: 3rem;
+  height: 3rem;
+}
+
+.table-responsive {
+  border: 1px solid #e21861;
+  border-radius: 5px;
+}
+
+.table thead th {
+  background-color: #e21861;
+  color: white;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
 }
 </style>

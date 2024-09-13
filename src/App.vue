@@ -29,20 +29,20 @@ export default {
   font-style: normal;
 }
 
-img{
+img {
   background-color: transparent;
 }
 
-html{
-  background-color: #2E2E30;
+html {
+  background-color: #ffffff; /* Changed to white */
 }
 
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #ffffff;
-  background-color: #2E2E30;
+  color: #000000; /* Changed text color to black for better contrast on white */
+  background-color: #ffffff; /* Changed to white */
   width: 100%;
   font-family: '911porschav3', sans-serif;
   margin-top: 120px;
@@ -84,4 +84,5 @@ html{
   border-radius: 7.5px;
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, #fd7bbc), color-stop(0.72, #fc3699), color-stop(0.86, #df0056));
 }
+
 </style>

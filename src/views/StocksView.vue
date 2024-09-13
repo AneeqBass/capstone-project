@@ -33,7 +33,8 @@
                         <p class="lead"><span class="text-success">Quantity</span>: {{ stock.quantity }}</p>
                         <p class="lead"><span class="text-success">Price</span>: R{{ stock.price }}</p>
                         <router-link :to="{ name: 'stockDetail', params: { id: stock.id } }"><i
-                                class="fas bi-arrow-right-circle-fill fa-10x"></i></router-link>
+                                class="fas bi-arrow-right-circle-fill fa-10x"></i>
+                        </router-link>
                     </template>
                 </Card>
             </div>
@@ -55,14 +56,14 @@ export default {
 
     data() {
         return {
-            selectedCategory: '', 
-            sortOption: 'name', 
+            selectedCategory: '',
+            sortOption: 'name',
         };
     },
     computed: {
         categories() {
             if (!this.$store.state.stocks || !this.$store.state.stocks.length) {
-                return []; 
+                return [];
             }
             const categories = this.$store.state.stocks.map(stock => stock.category);
             return [...new Set(categories)];
